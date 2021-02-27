@@ -1,1 +1,17 @@
-<h1>Hello, world!</h1>
+{{> header}}  
+{{> modals}}
+{{> alerts}}  
+
+  <!-- Products content -->
+  <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">Drag&Drop</h1>
+    <p class="lead">You can add your products to the cart easily, drag the image,<br>
+      and it will be added to your purchase.</p>
+  </div>
+
+  <div class="container">
+    <div class="card-deck mb-3 text-center" id="products-list">
+    </div>
+  </div>
+
+  {{> footer}}
