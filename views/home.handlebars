@@ -1,0 +1,29 @@
+{{> header}}
+{{> modals}}
+{{> alerts}}
+
+<!-- Products content -->
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+  <h1 class="display-4">Drag&Drop</h1>
+  <p class="lead">You can add your products to the cart easily, drag the image,<br>
+    and it will be added to your purchase.</p>
+</div>
+<div class="container">
+  <div class="card-deck mb-3 text-center" id="products-list">
+    {{!-- Product Card --}}
+    {{#each allGames}}
+    <div class="draggable card mb-4 h-100 shadow-sm" draggable="true" product-id="{{this._doc._id}}">
+      <img src="/img/{{this._doc.img.localImg}}" class="card-img-top" alt="{{this._doc.title}}" draggable="false">
+      <div class="card-body">
+        <h1 class="card-title pricing-card-title"><small class="text-muted">{{this._doc.price}} €</small></h1>
+        <button type="button" class="btn btn-lg btn-block btn-danger">Add to cart</button>
+      </div>
+      <div class="card-footer text-white">
+        <h4 class="my-0 font-weight-normal">{{this._doc.title}}</h4>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+</div>
+
+{{> footer}}

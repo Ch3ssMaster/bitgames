@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 // Product structure
-const UserSchema = new Schema({
+const ProductSchema = new Schema({
   title: {
     type: String,
     required: true,
@@ -16,9 +16,15 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
-  coverImg: {
-    type: String,
-    required: true,
+  img:{
+    localImg: {
+      type: String,
+      required: true,
+    },
+    coverImg: {
+      type: String,
+      required: false,
+    },
   },
   price: {
     type: Number,
@@ -27,4 +33,4 @@ const UserSchema = new Schema({
   },
 });
 
-module.exports = User = mongoose.model("product", UserSchema);
+module.exports = Product = mongoose.model("products", ProductSchema);

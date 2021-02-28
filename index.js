@@ -3,8 +3,8 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const path = require("path");
 const hbs = require("express-handlebars");
-// const users = require("./routes/api/users");
-const games = require("./routes/api/games");
+const Product = require("./models/Product");
+const apiGames = require("./routes/api/games");
 
 const app = express();
 
@@ -17,6 +17,7 @@ app.use(bodyParser.json());
 
 // DB Config
 const db = require("./config/db").mongoURI;
+const { title } = require("process");
 
 // DB connection
 mongoose
@@ -29,16 +30,15 @@ mongoose
 app.use(express.static(path.join(__dirname, "public")));
 
 // app.use('/api/users', users);
-app.use("/api/games", games);
+app.use("/api/games", apiGames);
 
 // Homepage route
 app.use("/", (req, res) => {
-  // let css = [{css:'/css/style.css'}]
-  // let scripts = [{script:'/javascript/javascript.js'}];
-  res.render("index");
-})
+  Product.find()
+    .sort({ title: -1 })    
+    .then((result) => res.render("home", { allGames: result}));
+});
 
 const port = process.env.PORT || 5000;
 
 app.listen(port, () => console.log(`Server started on port ${port}`));
-

@@ -1,10 +1,10 @@
 /* 
-  Dynamic ShowCase v1.0.0-alpha (https://github.com/Ch3ssMaster/dynamic_showcase)
-  Copyright 2020 Antonio Cebrián Mesa
+  bitGames v1.0.0-alpha (https://github.com/Ch3ssMaster/dynamic_showcase)
+  Copyright 2021 Antonio Cebrián Mesa
   Licensed under MIT (https://github.com/Ch3ssMaster/dynamic_showcase/blob/master/LICENSE.md) 
 */
 
-@import url("https://fonts.googleapis.com/css2?family=Antic+Slab&family=Comfortaa:wght@500;600&family=Kameron:wght@400;700&family=Pacifico&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Antic+Slab&family=Rubik:wght@400;500&family=Comfortaa:wght@500;600&family=Kameron:wght@400;700&family=Share+Tech+Mono&display=swap");
 
 html {
   font-size: 14px;
@@ -13,21 +13,32 @@ body {
   font-family: "Antic Slab", serif;
   min-height: 75rem;
   padding-top: 4.5rem;
+  background-color: #EDF1F2;
+}
+#header {
+  background-color: #293241;
+  color: #ee6c4d;
 }
 .logo {
-  font-size: 1.9em;
+  font-size: 2.5em;
+}
+.logo span, .bi-joystick {
+  color: #fdfffc;
 }
 .bi-basket2-fill {
-  color: #dc3545 !important;
+  color: #ee6c4d !important;
   opacity: 1;
   transition: all 0.2s ease;
 }
 .bi-basket2-fill:hover {
-  color: #333 !important;
-  opacity: 0.5;
+  color: #98c1d9 !important;
+  opacity: 0.8;
   -webkit-transform: rotateZ(-30deg);
   -ms-transform: rotateZ(-30deg);
   transform: rotateZ(-30deg);
+}
+.bi-person-circle {
+  color: #98c1d9;
 }
 button.close:focus {
   outline: none;
@@ -72,7 +83,7 @@ h5.modal-title {
   font-family: "Comfortaa", cursive;
 }
 h5 {
-  font-family: "Pacifico", cursive;
+  font-family: 'Share Tech Mono', monospace;
 }
 .container {
   max-width: 960px;
@@ -105,17 +116,13 @@ h5 {
 .pricing-card-title {
   font-family: "Kameron", serif;
 }
-footer h5 {
-  font-size: 1.8em;
+.card-footer{
+  background-color: #3d5a80;
+  min-height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-footer small {
-  font-family: "Comfortaa", cursive;
-  font-family: "Kameron", serif;
-  font-weight: 700;
-  font-size: 0.9em;
-  color: darkgreen !important;
-}
-
 .table td {
   vertical-align: middle !important;
 }
@@ -220,93 +227,57 @@ input[type="number"] {
   text-decoration: none;
   opacity: 0.3;
 }
+/* Footer */
+footer {
+  background-color: #fff;
+  border-radius: 5px;
+  font-family: 'Rubik', sans-serif;
+}
 footer ul {
   max-width: 75%;
   margin: auto;
+}
+footer li  {
+  margin: 0 5%;
+}
+footer li a {
+  color: #293241;
+  font-size: 3em;
 }
 .list-group-horizontal-md li {
   border: none !important;
   padding: 0;
 }
-footer .btn-floating.btn-lg {
-  width: 61.1px;
-  height: 61.1px;
+.fa-linkedin {
+  color: #0A66C2;
 }
-footer .btn-floating {
-  position: relative;
-  z-index: 1;
-  display: inline-block;
-  padding: 0;
-  margin: 10px;
-  overflow: hidden;
-  vertical-align: middle;
-  cursor: pointer;
-  border-radius: 50% !important;
-  -webkit-box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18),
-    0 4px 15px 0 rgba(0, 0, 0, 0.15);
-  box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
-  -webkit-transition: all 0.2s ease-in-out;
-  transition: all 0.2s ease-in-out;
-  width: 47px;
-  height: 47px;
+.fa-github-square {
+  color: #24292E;
 }
-footer .waves-effect {
-  position: relative;
-  overflow: hidden;
-  cursor: pointer;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  -webkit-tap-highlight-color: transparent;
+.fa-twitter-square {
+  color: #1DA1F2;
 }
-footer a.waves-effect,
-footer a.waves-light {
-  display: inline-block;
+footer h5 {
+  font-family: 'Rubik', sans-serif;
+  font-size: 1.8em;
 }
-footer .btn-lg,
-footer .btn {
-  padding: 1rem;
-  font-size: 1.25rem;
-  line-height: 1.5;
-  border-radius: 0.3rem;
+footer small {
+  font-family: "Kameron", serif;
+  font-weight: lighter;
+  color: #ee6c4d;
 }
-footer .btn-floating:hover {
-  -webkit-box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2),
-    0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
-footer .btn-floating.btn-lg svg {
-  font-size: 28px;
-  line-height: 61.1px;
-}
-footer .btn-floating svg {
-  display: inline-block;
-  color: #fff;
-  text-align: center;
-}
-footer .btn-li {
-  color: #fff;
-  background-color: #0082ca !important;
-}
-footer .btn-git {
-  color: #fff;
-  background-color: #333 !important;
-}
-.btn-tw {
-  color: #fff;
-  background-color: #55acee !important;
+.cig {
+  color: #ee6c4d;
 }
 .cig:hover {
   text-decoration: none;
 }
 .cig span {
-  border-bottom: 3px solid #0082ca;
+  border-bottom: 3px solid #ee6c4d;
   font-size: 1.5em;
   transition: all 0.25s linear;
   position: relative;
 }
-
 .cig span:before {
   content: "";
   display: block;
@@ -320,7 +291,6 @@ footer .btn-git {
   transform: scale(0);
   transition: 0.25s linear;
 }
-
 .cig span:hover:before {
   transform: scale(1);
 }
