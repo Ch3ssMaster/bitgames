@@ -1,70 +1,156 @@
-  <!-- Modal Cart -->
-  <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1"
-    aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title text-info" id="staticBackdropLabel">
-            <svg width="2.5em" height="2.5em" viewBox="0 0 16 16" class="bi bi-card-checklist mr-3" fill="currentColor"
+{{!-- Modal Cart --}}
+<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">
+          <i class="fas fa-shopping-cart"></i>
+          Your shopping
+        </h5>
+        <button autocomplete="none" type="button" class="close text-danger font-weight-bolder" data-dismiss="modal"
+          aria-label="Close">
+          <span aria-hidden="true">
+            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-dash-square-fill" fill="currentColor"
               xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd"
-                d="M14.5 3h-13a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z" />
-              <path fill-rule="evenodd"
-                d="M7 5.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0zM7 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0z" />
+                d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm2 7.5a.5.5 0 0 0 0 1h8a.5.5 0 0 0 0-1H4z" />
             </svg>
-            Your shopping
-          </h5>
-          <button type="button" class="close text-danger font-weight-bolder" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">
-              <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-dash-square-fill" fill="currentColor"
-                xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd"
-                  d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm2 7.5a.5.5 0 0 0 0 1h8a.5.5 0 0 0 0-1H4z" />
-              </svg>
-            </span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <table class="table table-striped table-hover">
-            <thead class="thead-dark">
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Item</th>
-                <th scope="col">Price</th>
-                <th scope="col">Quantity</th>
-              </tr>
-            </thead>
-            <tbody>
-              <!-- Dinamically add products -->
-            </tbody>
-          </table>
-        </div>
-        <div class="modal-footer">
-          <div class="container-fluid">
-            <div class="row">
-              <div class="col">
-                <h4>
-                  <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-cash-stack" fill="currentColor"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path d="M14 3H1a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1h-1z" />
-                    <path fill-rule="evenodd"
-                      d="M15 5H1v8h14V5zM1 4a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1H1z" />
-                    <path
-                      d="M13 5a2 2 0 0 0 2 2V5h-2zM3 5a2 2 0 0 1-2 2V5h2zm10 8a2 2 0 0 1 2-2v2h-2zM3 13a2 2 0 0 0-2-2v2h2zm7-4a2 2 0 1 1-4 0 2 2 0 0 1 4 0z" />
-                  </svg>
-                  Subtotal: <span id="total-count">0</span> €
-                </h4>
-              </div>
-              <div class="col text-right">
-                <button type="button" class="disabled btn btn-danger mb-2" id="empty-cart">Empty this cart</button>
-                <button type="button" class="disabled btn btn-primary mb-2 ml-2" id="btn-purchase" data-dismiss="modal"
-                  data-toggle="modal">
-                  Check Out!
-                </button>
-              </div>
+          </span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table class="table table-striped table-hover">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Item</th>
+              <th scope="col">Price</th>
+              <th scope="col">Quantity</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Dinamically add products -->
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col">
+              <h4>
+                <i class="fas fa-money-check"></i>
+                Subtotal: <span id="total-count">0</span> €
+              </h4>
+            </div>
+            <div class="col text-right">
+              <button autocomplete="none" type="button" class="disabled btn btn-danger mb-2" id="empty-cart">Empty this
+                cart</button>
+              <button autocomplete="none" type="button" class="disabled btn btn-primary mb-2 ml-2" id="btn-purchase"
+                data-dismiss="modal" data-toggle="modal">
+                Check Out!
+              </button>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
+
+{{!-- Modal login --}}
+
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true"
+  data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="loginModalLabel">Login</h5>
+        <i class="fas fa-user-times" data-dismiss="modal" aria-label="Close"></i>
+      </div>
+      {{!-- login body --}}
+      <div class="modal-body text-dark">
+        <div class="collapse multi-collapse show" id="modal-body-login">
+          <form>
+            <div class="mb-3">
+              <label for="newEmail" class="col-form-label">Email:</label>
+              <input autocomplete="none" type="email" class="form-control shadow p-4 mb-1 bg-white border-dark rounded"
+                id="newEmail" required>
+            </div>
+            <div class="mb-3">
+              <label for="inputLoginPassword" class="form-label">Password:</label>
+              <input autocomplete="none" type="password" id="inputLoginPassword"
+                class="form-control shadow p-4 mb-1 bg-white border-dark rounded" required>
+            </div>
+          </form>
+        </div>
+
+        {{!-- create account body --}}
+        <div class="collapse multi-collapse" id="modal-body-cAccount">
+          <form>
+            <div class="mb-3">
+              <label for="username" class="col-form-label">Name:</label>
+              <input autocomplete="none" type="text" class="form-control shadow p-4 mb-1 bg-white border-dark rounded"
+                id="username" required>
+            </div>
+            <div class="mb-3">
+              <label for="lastname" class="col-form-label">LastName:</label>
+              <input autocomplete="none" type="text" class="form-control shadow p-4 mb-1 bg-white border-dark rounded"
+                id="lastname" required>
+            </div>
+            <div class="mb-3">
+              <label for="email" class="col-form-label">Email:</label>
+              <input autocomplete="none" type="email" class="form-control shadow p-4 mb-1 bg-white border-dark rounded"
+                id="email" required>
+            </div>
+            <div class="mb-3">
+              <label for="inputPassword" class="form-label">Password:</label>
+              <div class="input-group">
+                <input autocomplete="none" type="password" id="inputPassword"
+                  class="form-control shadow p-4 mb-1 bg-white border-dark rounded" required>
+                <div class="input-group-append ml-1">
+                  <span class="input-group-text mb-1 rounded">
+                    <button type="button" class="btn btn-link" data-show="password" data-target="inputPassword">
+                      <i class="fas fa-eye"></i>
+                    </button>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="inputPassword2" class="form-label">Password (repeat to verify):</label>
+              <div class="input-group">
+                <input autocomplete="none" type="password" id="inputPassword2"
+                  class="form-control shadow p-4 mb-1 bg-white border-dark rounded" required>
+                <div class="input-group-append ml-1">
+                  <span class="input-group-text mb-1 rounded">
+                    <button type="button" class="btn btn-link" data-show="password" data-target="inputPassword2">
+                      <i class="fas fa-eye"></i>
+                    </button>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col">
+              <button autocomplete="none" type="button" class="btn btn-outline-primary" data-toggle="collapse"
+                data-target=".multi-collapse" aria-expanded="true" aria-controls="modal-body-login modal-body-cAccount"
+                id="toggleLogin">Create
+                Account</button>
+            </div>
+            <div class="col text-right">
+              <button autocomplete="none" type="button" class="btn btn-outline-secondary"
+                data-dismiss="modal">Close</button>
+              <button autocomplete="none" type="button" class="btn btn-primary" id="goLogin">Login</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

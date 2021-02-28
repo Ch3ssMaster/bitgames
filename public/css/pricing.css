@@ -2,7 +2,7 @@
   bitGames v1.0.0-alpha (https://github.com/Ch3ssMaster/dynamic_showcase)
   Copyright 2021 Antonio Cebrián Mesa
   Licensed under MIT (https://github.com/Ch3ssMaster/dynamic_showcase/blob/master/LICENSE.md) 
-*/
+  */
 
 @import url("https://fonts.googleapis.com/css2?family=Antic+Slab&family=Rubik:wght@400;500&family=Comfortaa:wght@500;600&family=Kameron:wght@400;700&family=Share+Tech+Mono&display=swap");
 
@@ -13,7 +13,17 @@ body {
   font-family: "Antic Slab", serif;
   min-height: 75rem;
   padding-top: 4.5rem;
-  background-color: #EDF1F2;
+  background-color: #edf1f2;
+}
+h4,
+h5.modal-title {
+  font-family: "Comfortaa", cursive;
+}
+h5 {
+  font-family: "Share Tech Mono", monospace;
+}
+.container {
+  max-width: 960px;
 }
 #header {
   background-color: #293241;
@@ -22,7 +32,8 @@ body {
 .logo {
   font-size: 2.5em;
 }
-.logo span, .bi-joystick {
+.logo span,
+.bi-joystick {
   color: #fdfffc;
 }
 .bi-basket2-fill {
@@ -78,16 +89,24 @@ button.close:focus {
   -webkit-animation-iteration-count: infinite;
   animation-iteration-count: infinite;
 }
-h4,
-h5.modal-title {
-  font-family: "Comfortaa", cursive;
+/* Login */
+#loginModal {
+  font-size: 1.3em;
 }
-h5 {
-  font-family: 'Share Tech Mono', monospace;
+#loginModal .modal-footer button{
+  font-size: 1.1em;
+  text-transform: capitalize;
 }
-.container {
-  max-width: 960px;
+#loginModal .modal-header{
+  background-color: #98c1d9;
+  color: #edf5f5;
+  font-weight: bold;
 }
+.fa-user-times {
+  font-size: 1.4em;
+  color: #293241;
+}
+/* Cards */
 
 .pricing-header {
   max-width: 700px;
@@ -112,11 +131,16 @@ h5 {
   -ms-user-select: none;
   user-select: none;
 }
-
+/* Shopping list */
+.fa-shopping-cart,
+.fa-money-check {
+  margin-right: 2%;
+  font-size: 1.3em;
+}
 .pricing-card-title {
   font-family: "Kameron", serif;
 }
-.card-footer{
+.card-footer {
   background-color: #3d5a80;
   min-height: 100px;
   display: flex;
@@ -231,13 +255,13 @@ input[type="number"] {
 footer {
   background-color: #fff;
   border-radius: 5px;
-  font-family: 'Rubik', sans-serif;
+  font-family: "Rubik", sans-serif;
 }
 footer ul {
   max-width: 75%;
   margin: auto;
 }
-footer li  {
+footer li {
   margin: 0 5%;
 }
 footer li a {
@@ -249,22 +273,22 @@ footer li a {
   padding: 0;
 }
 .fa-linkedin {
-  color: #0A66C2;
+  color: #0a66c2;
 }
 .fa-github-square {
-  color: #24292E;
+  color: #24292e;
 }
 .fa-twitter-square {
-  color: #1DA1F2;
+  color: #1da1f2;
 }
 footer h5 {
-  font-family: 'Rubik', sans-serif;
+  font-family: "Rubik", sans-serif;
   font-size: 1.8em;
 }
 footer small {
-  font-family: "Kameron", serif;
-  font-weight: lighter;
-  color: #ee6c4d;
+  font-weight: bolder;
+  color: #3d5a80;
+  font-size: 0.9em;
 }
 .cig {
   color: #ee6c4d;
@@ -286,7 +310,7 @@ footer small {
   background-color: #61a3ff;
   position: absolute;
   left: 0;
-  bottom: -3px; 
+  bottom: -3px;
   transform-origin: left;
   transform: scale(0);
   transition: 0.25s linear;
