@@ -60,97 +60,96 @@
 
 {{!-- Modal login --}}
 
-<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true"
-  data-backdrop="static" data-keyboard="false">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="loginModalLabel">Login</h5>
-        <i class="fas fa-user-times" data-dismiss="modal" aria-label="Close"></i>
-      </div>
-      {{!-- login body --}}
-      <div class="modal-body text-dark">
-        <div class="collapse multi-collapse show" id="modal-body-login">
-          <form>
-            <div class="mb-3">
-              <label for="newEmail" class="col-form-label">Email:</label>
-              <input autocomplete="none" type="email" class="form-control shadow p-4 mb-1 bg-white border-dark rounded"
-                id="newEmail" required>
+<form name="users" method="POST" action="users/profile">
+  {{!-- <form name="newAccount" method="POST" action="users/new-user"> --}}
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true"
+      data-backdrop="static" data-keyboard="false">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="loginModalLabel">Login</h5>
+            <i class="fas fa-user-times" data-dismiss="modal" aria-label="Close"></i>
+          </div>
+          {{!-- login body --}}
+          <div class="modal-body text-dark">
+            <div class="collapse multi-collapse show" id="modal-body-login">
+              <div class="mb-3">
+                <label for="newEmail" class="col-form-label">Email:</label>
+                <input autocomplete="none" type="email"
+                  class="form-control shadow p-4 mb-1 bg-white border-dark rounded" id="newEmail" required>
+              </div>
+              <div class="mb-3">
+                <label for="inputLoginPassword" class="form-label">Password:</label>
+                <input autocomplete="none" type="password" id="inputLoginPassword"
+                  class="form-control shadow p-4 mb-1 bg-white border-dark rounded" required>
+              </div>
             </div>
-            <div class="mb-3">
-              <label for="inputLoginPassword" class="form-label">Password:</label>
-              <input autocomplete="none" type="password" id="inputLoginPassword"
-                class="form-control shadow p-4 mb-1 bg-white border-dark rounded" required>
-            </div>
-          </form>
-        </div>
 
-        {{!-- create account body --}}
-        <div class="collapse multi-collapse" id="modal-body-cAccount">
-          <form>
-            <div class="mb-3">
-              <label for="username" class="col-form-label">Name:</label>
-              <input autocomplete="none" type="text" class="form-control shadow p-4 mb-1 bg-white border-dark rounded"
-                id="username" required>
-            </div>
-            <div class="mb-3">
-              <label for="lastname" class="col-form-label">LastName:</label>
-              <input autocomplete="none" type="text" class="form-control shadow p-4 mb-1 bg-white border-dark rounded"
-                id="lastname" required>
-            </div>
-            <div class="mb-3">
-              <label for="email" class="col-form-label">Email:</label>
-              <input autocomplete="none" type="email" class="form-control shadow p-4 mb-1 bg-white border-dark rounded"
-                id="email" required>
-            </div>
-            <div class="mb-3">
-              <label for="inputPassword" class="form-label">Password:</label>
-              <div class="input-group">
-                <input autocomplete="none" type="password" id="inputPassword"
-                  class="form-control shadow p-4 mb-1 bg-white border-dark rounded" required>
-                <div class="input-group-append ml-1">
-                  <span class="input-group-text mb-1 rounded">
-                    <button type="button" class="btn btn-link" data-show="password" data-target="inputPassword">
-                      <i class="fas fa-eye"></i>
-                    </button>
-                  </span>
+            {{!-- create account body --}}
+            <div class="collapse multi-collapse" id="modal-body-cAccount">
+              <div class="mb-3">
+                <label for="username" class="col-form-label">Name:</label>
+                <input autocomplete="none" type="text" class="form-control shadow p-4 mb-1 bg-white border-dark rounded"
+                  id="username" name="username" required disabled>
+              </div>
+              <div class="mb-3">
+                <label for="lastname" class="col-form-label">LastName:</label>
+                <input autocomplete="none" type="text" class="form-control shadow p-4 mb-1 bg-white border-dark rounded"
+                  id="lastname" required disabled>
+              </div>
+              <div class="mb-3">
+                <label for="email" class="col-form-label">Email:</label>
+                <input autocomplete="none" type="email"
+                  class="form-control shadow p-4 mb-1 bg-white border-dark rounded" id="email" name="email" required disabled>
+              </div>
+              <div class="mb-3">
+                <label for="inputPassword" class="form-label">Password:</label>
+                <div class="input-group">
+                  <input autocomplete="none" type="password" id="inputPassword" name="inputPassword"
+                    class="form-control shadow p-4 mb-1 bg-white border-dark rounded" required disabled>
+                  <div class="input-group-append ml-1">
+                    <span class="input-group-text mb-1 rounded">
+                      <button type="button" class="btn btn-link" data-show="password" data-target="inputPassword">
+                        <i class="fas fa-eye"></i>
+                      </button>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="inputPassword2" class="form-label">Password (repeat to verify):</label>
+                <div class="input-group">
+                  <input autocomplete="none" type="password" id="inputPassword2" name="inputPassword"
+                    class="form-control shadow p-4 mb-1 bg-white border-dark rounded" required disabled>
+                  <div class="input-group-append ml-1">
+                    <span class="input-group-text mb-1 rounded">
+                      <button type="button" class="btn btn-link" data-show="password" data-target="inputPassword2">
+                        <i class="fas fa-eye"></i>
+                      </button>
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="mb-3">
-              <label for="inputPassword2" class="form-label">Password (repeat to verify):</label>
-              <div class="input-group">
-                <input autocomplete="none" type="password" id="inputPassword2"
-                  class="form-control shadow p-4 mb-1 bg-white border-dark rounded" required>
-                <div class="input-group-append ml-1">
-                  <span class="input-group-text mb-1 rounded">
-                    <button type="button" class="btn btn-link" data-show="password" data-target="inputPassword2">
-                      <i class="fas fa-eye"></i>
-                    </button>
-                  </span>
+          </div>
+          <div class="modal-footer">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col">
+                  <button autocomplete="none" type="button" class="btn btn-outline-primary" data-toggle="collapse"
+                    data-target=".multi-collapse" aria-expanded="true"
+                    aria-controls="modal-body-login modal-body-cAccount" id="toggleLogin">Create
+                    Account</button>
+                </div>
+                <div class="col text-right">
+                  <button autocomplete="none" type="button" class="btn btn-outline-secondary"
+                    data-dismiss="modal">Close</button>
+                  <button autocomplete="none" type="submit" class="btn btn-primary" id="goLogin">Login</button>
                 </div>
               </div>
-            </div>
-          </form>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col">
-              <button autocomplete="none" type="button" class="btn btn-outline-primary" data-toggle="collapse"
-                data-target=".multi-collapse" aria-expanded="true" aria-controls="modal-body-login modal-body-cAccount"
-                id="toggleLogin">Create
-                Account</button>
-            </div>
-            <div class="col text-right">
-              <button autocomplete="none" type="button" class="btn btn-outline-secondary"
-                data-dismiss="modal">Close</button>
-              <button autocomplete="none" type="button" class="btn btn-primary" id="goLogin">Login</button>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
+  </form>

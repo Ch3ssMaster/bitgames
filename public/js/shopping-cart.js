@@ -19,8 +19,8 @@ function ready() {
     button.addEventListener("click", addToCartClicked);
   }
   var showPassword = document.querySelectorAll('[data-show="password"]');
-  console.log(showPassword);
-  
+  // console.log(showPassword);
+
   for (var i = 0; i < showPassword.length; i++) {
     var button = showPassword[i];
     button.addEventListener("click", togglePassword);
@@ -39,34 +39,55 @@ function getYear() {
 function toggleLogin() {
   let buttonText = document.querySelector("#toggleLogin").innerText;
   if (buttonText == "Create Account") {
+    //disable login form
+    document.querySelector("#newEmail").disabled = true;
+    document.querySelector("#inputLoginPassword").disabled = true;
+    //enable registry form
+    document.querySelector("#username").disabled = false;
+    document.querySelector("#lastname").disabled = false;
+    document.querySelector("#email").disabled = false;
+    document.querySelector("#inputPassword").disabled = false;
+    document.querySelector("#inputPassword2").disabled = false;
+    //change form data
     document.querySelector("#toggleLogin").innerText = "Login";
     document
-      .querySelector("#toggleLogin")
-      .classList.remove("btn-outline-primary");
+    .querySelector("#toggleLogin")
+    .classList.remove("btn-outline-primary");
     document.querySelector("#toggleLogin").classList.add("btn-primary");
     document.querySelector("#goLogin").innerText = "Register";
     document.querySelector("#loginModalLabel").innerText = "New User";
-} else {
+  } else {
+    //enable login form
+    document.querySelector("#newEmail").disabled = false;
+    document.querySelector("#inputLoginPassword").disabled = false;
+    //disable registry form
+    document.querySelector("#username").disabled = true;
+    document.querySelector("#lastname").disabled = true;
+    document.querySelector("#email").disabled = true;
+    document.querySelector("#inputPassword").disabled = true;
+    document.querySelector("#inputPassword2").disabled = true;
+    //change form data
+    document.querySelector("#loginModalLabel").innerText = "Login";
     document.querySelector("#toggleLogin").innerText = "Create Account";
     document.querySelector("#toggleLogin").classList.remove("btn-primary");
     document.querySelector("#toggleLogin").classList.add("btn-outline-primary");
     document.querySelector("#goLogin").innerText = "Login";
-    document.querySelector("#loginModalLabel").innerText = "Login";
+    document.querySelector("#goLogin").innerText = "Login";
   }
 }
 function togglePassword(event) {
-    let element = event.target.closest('button');
-    let elementTarget = element.getAttribute('data-target');
-    console.log(element.innerHTML);
-    let newElement = document.getElementById(elementTarget);
-    let type = newElement.getAttribute("type");
-    if (type == 'password') {
-        newElement.setAttribute("type", "text");  
-        element.innerHTML = '<i class="fas fa-eye-slash"></i>';    
-    } else {
-        element.innerHTML = '<i class="fas fa-eye"></i>';    
-        newElement.setAttribute("type", "password");        
-    }
+  let element = event.target.closest("button");
+  let elementTarget = element.getAttribute("data-target");
+  // console.log(element.innerHTML);
+  let newElement = document.getElementById(elementTarget);
+  let type = newElement.getAttribute("type");
+  if (type == "password") {
+    newElement.setAttribute("type", "text");
+    element.innerHTML = '<i class="fas fa-eye-slash"></i>';
+  } else {
+    element.innerHTML = '<i class="fas fa-eye"></i>';
+    newElement.setAttribute("type", "password");
+  }
 }
 
 document.getElementById("cart").onclick = function () {
