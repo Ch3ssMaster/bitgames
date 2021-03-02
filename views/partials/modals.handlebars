@@ -60,7 +60,7 @@
 
 {{!-- Modal login --}}
 
-<form name="users" method="POST" action="users/profile">
+<form name="login" method="POST" action="users/profile" id="loginForm">
   {{!-- <form name="newAccount" method="POST" action="users/new-user"> --}}
     <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true"
       data-backdrop="static" data-keyboard="false">
@@ -95,7 +95,7 @@
               <div class="mb-3">
                 <label for="lastname" class="col-form-label">LastName:</label>
                 <input autocomplete="none" type="text" class="form-control shadow p-4 mb-1 bg-white border-dark rounded"
-                  id="lastname" required disabled>
+                  id="lastname" name="lastname" required disabled>
               </div>
               <div class="mb-3">
                 <label for="email" class="col-form-label">Email:</label>
@@ -119,7 +119,7 @@
               <div class="mb-3">
                 <label for="inputPassword2" class="form-label">Password (repeat to verify):</label>
                 <div class="input-group">
-                  <input autocomplete="none" type="password" id="inputPassword2" name="inputPassword"
+                  <input autocomplete="none" type="password" id="inputPassword2" name="inputPassword2"
                     class="form-control shadow p-4 mb-1 bg-white border-dark rounded" required disabled>
                   <div class="input-group-append ml-1">
                     <span class="input-group-text mb-1 rounded">

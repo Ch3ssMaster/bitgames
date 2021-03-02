@@ -39,6 +39,9 @@ function getYear() {
 function toggleLogin() {
   let buttonText = document.querySelector("#toggleLogin").innerText;
   if (buttonText == "Create Account") {
+    // set name attribute for login form
+    document.querySelector("#loginForm").setAttribute("name", "register");
+
     //disable login form
     document.querySelector("#newEmail").disabled = true;
     document.querySelector("#inputLoginPassword").disabled = true;
@@ -51,12 +54,15 @@ function toggleLogin() {
     //change form data
     document.querySelector("#toggleLogin").innerText = "Login";
     document
-    .querySelector("#toggleLogin")
-    .classList.remove("btn-outline-primary");
+      .querySelector("#toggleLogin")
+      .classList.remove("btn-outline-primary");
     document.querySelector("#toggleLogin").classList.add("btn-primary");
     document.querySelector("#goLogin").innerText = "Register";
     document.querySelector("#loginModalLabel").innerText = "New User";
   } else {
+    // set name attribute for login form
+    document.querySelector("#loginForm").setAttribute("name", "login");
+
     //enable login form
     document.querySelector("#newEmail").disabled = false;
     document.querySelector("#inputLoginPassword").disabled = false;
