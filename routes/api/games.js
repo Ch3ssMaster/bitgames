@@ -11,7 +11,6 @@ router.get("/", (req, res) => {
   Product.find()
     .sort({ title: 1 })
     .then((products) => {
-      console.log('test');
       res.json(products)
     });
 });

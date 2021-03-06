@@ -1,0 +1,101 @@
+{{> header}}
+{{#each data.userData}}
+<div class="container pt-5">
+{{#each data.query}}
+{{!-- {{#if this == 1}} --}}
+    <h4>Got it!</h4>
+{{!-- {{/if}} --}}
+{{/each}}
+    <div class="row justify-content-md-center pt-5">
+        <div class="col-4">
+            <div class="card rounded border border-info" style="width: 18rem;">
+                <img class="card-img-top" src="/img/vr-profile.png" alt="User image">
+                <div class="card-header bg-info text-white">
+                    <h5 class="card-title text-center pt-3">
+                        <strong>
+                            {{this.name}} {{this.lastname}}
+                        </strong>
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><strong>Role:</strong>
+                            {{#switch this.role}}
+                            {{#case 0}} Admin {{/case}}
+                            {{#case 1}} Vendor {{/case}}
+                            {{#default "User"}} {{/default}}
+                            {{/switch}}
+                        </li>
+                        <li class="list-group-item"><strong>Member from:</strong> {{this.createdAt}}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-8">
+            <div class="container bg-info border border-info rounded mb-5 p-3">
+                <h2 class="display-4 text-center">
+                    <i class="fas fa-gamepad text-white mr-3"></i> Welcome, <strong
+                        class="text-white">{{this.name}}</strong>
+                </h2>
+            </div>
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active border-info border-bottom-0" id="home-tab" data-toggle="tab" href="#home"
+                        role="tab" aria-controls="home" aria-selected="true">User Info</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link border-info border-bottom-0" id="profile-tab" data-toggle="tab" href="#profile"
+                        role="tab" aria-controls="profile" aria-selected="false">Password</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    {{!-- User data --}}
+                    <div class="container-fluid bg-white p-5 rounded-bottom border border-info">
+                        <form action="/user/{{this._id}}" method="POST" id="userData">
+                            <input type="hidden" name="updateUserData" value="true">
+                            <div class="form-group">
+                                <label for="newName">Name</label>
+                                <input type="text" class="form-control bg-light border-dark" id="newName"
+                                    aria-describedby="nameHelp" value="{{this.name}}" name="userName" required>
+                                <small id="nameHelp" class="form-text text-muted">To <strong>change your name</strong>,
+                                    write the new
+                                    here and press submit</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="newLastname">Lastname</label>
+                                <input type="text" class="form-control bg-light border-dark" id="newLastname"
+                                    aria-describedby="lastNameHelp" value="{{this.lastname}}" name="userLastName" required>
+                                <small id="lastNameHelp" class="form-text text-muted">To <strong>change your
+                                        lastname</strong>, write the
+                                    new here and press submit</small>
+                            </div>
+                            <button type="submit" class="btn btn-info">Submit</button>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    {{!-- User password --}}
+                    <div class="container-fluid bg-white p-5 rounded-bottom border border-info">
+                            <div class="form-group">
+                                <label for="newPassword">Password</label>
+                                <input type="text" class="form-control bg-light border-dark" id="newPassword"
+                                    aria-describedby="lastNameHelp" placeholder="Enter your new password" disabled required>
+                                <small id="lastNameHelp" class="form-text text-muted">To <strong>change your
+                                        password</strong>, write the
+                                    new here and press submit</small>
+                            </div>
+                            <button type="submit" class="btn btn-info">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="container bg-info border border-info rounded mt-4 p-3 text-center">
+                <a class="btn btn-link shopping" href="/" role="button">
+                    Go Shopping!
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{{/each}}
+{{> footer}}

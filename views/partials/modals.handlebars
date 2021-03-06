@@ -60,7 +60,7 @@
 
 {{!-- Modal login --}}
 
-<form name="login" method="POST" action="users/profile" id="loginForm">
+<form name="login" method="POST" action="/" id="loginForm">
   {{!-- <form name="newAccount" method="POST" action="users/new-user"> --}}
     <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true"
       data-backdrop="static" data-keyboard="false">
@@ -153,3 +153,19 @@
       </div>
     </div>
   </form>
+
+ {{!-- Alert error new user --}}
+ <div id="error-user" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 id="alert-modal-title" class="modal-title"></h4>
+      </div>
+      <div id="alert-modal-body" class="modal-body"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -9,7 +9,7 @@ if (document.readyState == "loading") {
 }
 
 function ready() {
-  getYear();
+  // getYear();
 
   var addToCartButtons = document.getElementsByClassName(
     "btn btn-lg btn-block btn-danger"
@@ -32,10 +32,10 @@ function ready() {
     .addEventListener("click", purchaseClicked);
   document.getElementById("toggleLogin").addEventListener("click", toggleLogin);
 }
-function getYear() {
-  var year = new Date();
-  document.getElementById("date").innerHTML += year.getFullYear();
-}
+// function getYear() {
+//   var year = new Date();
+//   document.getElementById("date").innerHTML += year.getFullYear();
+// }
 function toggleLogin() {
   let buttonText = document.querySelector("#toggleLogin").innerText;
   if (buttonText == "Create Account") {
@@ -325,13 +325,10 @@ cart.addEventListener("dragenter", function (e) {
 cart.addEventListener("drop", function (e) {
   this.classList.add("hvr-pulse");
   var productId = draggedItem.getAttribute("product-id");
-  var title = draggedItem.firstChild.getAttribute("alt");
-  var productName = draggedItem.firstChild.nextSibling.nextSibling.textContent;
-  var price = draggedItem.firstChild.nextSibling.firstChild.innerText.replace(
-    " € / Kg",
-    ""
-  );
-  var imageSrc = draggedItem.firstChild.src;
-  addItemToCart(productId, title, productName, price, imageSrc);
+  var title = draggedItem.querySelector("img").getAttribute("alt");
+  var price = draggedItem.querySelector("small").innerText.replace(" €", "");
+  var imageSrc = draggedItem.querySelector("img").src;
+  var imageSrc = imageSrc.substring(imageSrc.lastIndexOf("/") + 1);
+  addItemToCart(productId, title, price, imageSrc);
   updateCartTotal();
 });

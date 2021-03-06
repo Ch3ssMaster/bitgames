@@ -318,7 +318,13 @@ footer small {
 .cig span:hover:before {
   transform: scale(1);
 }
-
+/* User profile */
+.shopping {
+  font-family: "Share Tech Mono", monospace;
+  font-size: 2em;
+  font-weight: lighter;
+  color: #fff !important;
+}
 /* Responsive */
 @media (max-width: 800px) and (min-width: 768px) {
   html {

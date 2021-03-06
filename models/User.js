@@ -1,7 +1,5 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const bcrypt = require("bcrypt");
-const SALT_WORK_FACTOR = 10;
 
 // User structure
 const UserSchema = new Schema({
@@ -15,12 +13,14 @@ const UserSchema = new Schema({
   },
   email: {
     type: String,
+    index: true, 
+    unique: true,
     required: true,
-    index: { unique: true },
   },
   password: {
     type: String,
     required: true,
+    bcrypt: true,
   },
   role: {
     type: Number,
@@ -29,6 +29,13 @@ const UserSchema = new Schema({
     enum: [0, 1, 2],
     required: true,
   },
+  createdAt: {
+    type: Date,
+    required: true,
+  }
 });
+
+UserSchema.plugin(require('mongoose-bcrypt'));
+UserSchema.plugin(require('mongoose-unique-validator'));
 
 module.exports = User = mongoose.model("User", UserSchema);
