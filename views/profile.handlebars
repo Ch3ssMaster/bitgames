@@ -1,11 +1,7 @@
 {{> header}}
-{{#each data.userData}}
+
 <div class="container pt-5">
-{{#each data.query}}
-{{!-- {{#if this == 1}} --}}
-    <h4>Got it!</h4>
-{{!-- {{/if}} --}}
-{{/each}}
+    {{#each data.userData}}
     <div class="row justify-content-md-center pt-5">
         <div class="col-4">
             <div class="card rounded border border-info" style="width: 18rem;">
@@ -65,7 +61,8 @@
                             <div class="form-group">
                                 <label for="newLastname">Lastname</label>
                                 <input type="text" class="form-control bg-light border-dark" id="newLastname"
-                                    aria-describedby="lastNameHelp" value="{{this.lastname}}" name="userLastName" required>
+                                    aria-describedby="lastNameHelp" value="{{this.lastname}}" name="userLastName"
+                                    required>
                                 <small id="lastNameHelp" class="form-text text-muted">To <strong>change your
                                         lastname</strong>, write the
                                     new here and press submit</small>
@@ -76,15 +73,15 @@
                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                     {{!-- User password --}}
                     <div class="container-fluid bg-white p-5 rounded-bottom border border-info">
-                            <div class="form-group">
-                                <label for="newPassword">Password</label>
-                                <input type="text" class="form-control bg-light border-dark" id="newPassword"
-                                    aria-describedby="lastNameHelp" placeholder="Enter your new password" disabled required>
-                                <small id="lastNameHelp" class="form-text text-muted">To <strong>change your
-                                        password</strong>, write the
-                                    new here and press submit</small>
-                            </div>
-                            <button type="submit" class="btn btn-info">Submit</button>
+                        <div class="form-group">
+                            <label for="newPassword">Password</label>
+                            <input type="text" class="form-control bg-light border-dark" id="newPassword"
+                                aria-describedby="lastNameHelp" placeholder="Enter your new password" disabled required>
+                            <small id="lastNameHelp" class="form-text text-muted">To <strong>change your
+                                    password</strong>, write the
+                                new here and press submit</small>
+                        </div>
+                        <button type="submit" class="btn btn-info">Submit</button>
                         </form>
                     </div>
                 </div>
@@ -96,6 +93,34 @@
             </div>
         </div>
     </div>
+    {{/each}}
+    <div class="row justify-content-md-center pt-5">
+        {{#if (checkPostUpdated data) }}
+        {{#if (checkUpdated data) }}
+        {{#if (checkUpdatedPassword data)}}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Great!</strong> Your password has been updated.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {{else}}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Great!</strong> Your details have been updated.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {{/if}}
+        {{else}}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <strong>There was an error with the update.</strong> Please try again or contact the administrator.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {{/if}}
+        {{/if}}
+    </div>
 </div>
-{{/each}}
 {{> footer}}

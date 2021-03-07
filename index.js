@@ -43,6 +43,21 @@ helpersHbs.handlebars.registerHelper("default", function (value, options) {
     return value;
   }
 });
+helpersHbs.handlebars.registerHelper("checkPostUpdated", function (value) {
+  if (value['query']) {
+    return true;
+  }
+});
+helpersHbs.handlebars.registerHelper("checkUpdated", function (value) {
+  if (value.query.updated == 1) {
+    return true;
+  }
+});
+helpersHbs.handlebars.registerHelper("checkUpdatedPassword", function (value) {
+  if (value.query.data == "passwordData") {
+    return true;
+  }
+});
 
 // DB Config
 const db = require("./config/db").mongoURI;
@@ -102,7 +117,6 @@ app.get("/user/:id", (req, res) => {
   User.find({ _id: req.params.id })
     .lean()
     .then((result) => {
-      // res.send(result[0].name);
       if (
         Object.keys(req.query).length === 0 &&
         req.query.constructor === Object
@@ -121,7 +135,6 @@ app.get("/user/:id", (req, res) => {
 });
 // Updating user profile
 app.post("/user/:id", (req, res) => {
-  // console.log(req.body.updateUserData);
   if (req.body.updateUserData === "true") {
     var query = "&data=userData";
     var data = {
