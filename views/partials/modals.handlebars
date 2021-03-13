@@ -100,13 +100,15 @@
               <div class="mb-3">
                 <label for="email" class="col-form-label">Email:</label>
                 <input autocomplete="none" type="email"
-                  class="form-control shadow p-4 mb-1 bg-white border-dark rounded" id="email" name="email" required disabled>
+                  class="form-control shadow p-4 mb-1 bg-white border-dark rounded" id="email" name="email" required
+                  disabled>
               </div>
               <div class="mb-3">
                 <label for="inputPassword" class="form-label">Password:</label>
                 <div class="input-group">
                   <input autocomplete="none" type="password" id="inputPassword" name="inputPassword"
-                    class="form-control shadow p-4 mb-1 bg-white border-dark rounded" required disabled>
+                    class="form-control shadow p-4 mb-1 bg-white border-dark rounded"
+                    aria-describedby="passwordHelpBlock" required disabled>
                   <div class="input-group-append ml-1">
                     <span class="input-group-text mb-1 rounded">
                       <button type="button" class="btn btn-link" data-show="password" data-target="inputPassword">
@@ -114,13 +116,19 @@
                       </button>
                     </span>
                   </div>
+                  <small id="passwordHelpBlock" class="form-text text-danger">
+                    Your password must be 8-20 characters long, contain
+                    upper case and lower case letters, numbers and special characters,
+                    and must not contain spaces, or emoji.
+                  </small>
                 </div>
               </div>
               <div class="mb-3">
                 <label for="inputPassword2" class="form-label">Password (repeat to verify):</label>
                 <div class="input-group">
                   <input autocomplete="none" type="password" id="inputPassword2" name="inputPassword2"
-                    class="form-control shadow p-4 mb-1 bg-white border-dark rounded" required disabled>
+                    class="form-control shadow p-4 mb-1 bg-white border-dark rounded"
+                    aria-describedby="passwordHelpBlock2" required disabled>
                   <div class="input-group-append ml-1">
                     <span class="input-group-text mb-1 rounded">
                       <button type="button" class="btn btn-link" data-show="password" data-target="inputPassword2">
@@ -129,6 +137,9 @@
                     </span>
                   </div>
                 </div>
+                <small id="passwordHelpBlock2" class="form-text text-danger d-none">
+                  Passwords do not match
+                </small>
               </div>
             </div>
           </div>
@@ -154,18 +165,19 @@
     </div>
   </form>
 
- {{!-- Alert error new user --}}
- <div id="error-user" class="modal fade">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 id="alert-modal-title" class="modal-title"></h4>
-      </div>
-      <div id="alert-modal-body" class="modal-body"></div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+  {{!-- Alert error new user --}}
+  <div id="error-user" class="modal fade">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+              aria-hidden="true">&times;</span></button>
+          <h4 id="alert-modal-title" class="modal-title"></h4>
+        </div>
+        <div id="alert-modal-body" class="modal-body"></div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
       </div>
     </div>
   </div>
-</div>

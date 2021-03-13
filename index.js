@@ -8,6 +8,9 @@ var moment = require("moment-timezone");
 const Product = require("./models/Product");
 const User = require("./models/User");
 const apiGames = require("./routes/api/games");
+const rand = require("random-key");
+const cookieParser = require('cookie-parser');
+const jwt_decode = require('jwt-decode');
 
 const app = express();
 
@@ -15,6 +18,9 @@ const app = express();
 app.engine("handlebars", hbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 var helpersHbs = hbs.create({});
+
+// Cookie Parser
+app.use(cookieParser());
 
 // Bodyparser Middleware
 app.use(express.json());
@@ -44,7 +50,7 @@ helpersHbs.handlebars.registerHelper("default", function (value, options) {
   }
 });
 helpersHbs.handlebars.registerHelper("checkPostUpdated", function (value) {
-  if (value['query']) {
+  if (value["query"]) {
     return true;
   }
 });
@@ -69,13 +75,17 @@ const { request } = require("http");
 // Static folder
 app.use(express.static(path.join(__dirname, "public")));
 
+// Key generator for jwt
+// const secretKey = rand.generate();
+const secretKey = ".@f/37?XDF$nU[e_";
+
 // Return products json
 app.use("/api/games", apiGames);
 
 // Homepage route
 app.get("/", (req, res) => {
   if (req.query.user) {
-    console.log(req.body);
+    // console.log(req.body);
   }
 
   Product.find()
@@ -97,10 +107,16 @@ app.post("/", (req, res) => {
   user
     .save()
     .then((user) => {
-      const URL = "/user/".concat(`${user._id}`);
-      res.redirect(URL);
+      jwt.sign({ user }, secretKey, (err, token) => {
+        let cookieLifetime = (60 * 60 * 24 + 3600);
+        // let cookieLifetime = (3600);
+        res.cookie('authcookie',token,{maxAge:cookieLifetime,httpOnly:true,path:'/user/'}) 
+        const URL = "/user/".concat(`${user._id}`);
+        res.redirect(URL);
+      });
     })
     .catch((err) => {
+      console.log(err);
       var fireEvent = "$('#error-user').modal('show')";
       var errorData = {
         message: err._message,
@@ -112,26 +128,55 @@ app.post("/", (req, res) => {
     });
 });
 
+//  FORMAT OF TOKEN
+// Authorization: Bearer <access_token>
+
+function verifyToken(req, res, next) {
+  // Check id in cookie
+  if ('authcookie' in req.cookies) {
+    let decoded = jwt_decode(req.cookies.authcookie);
+   if(decoded.user._id == req.params.id){
+     next();
+   }else{
+     res.redirect('/');
+    }
+    //next middleware
+  } else {
+    //Forbidden access
+    // res.sendStatus(403);
+    res.redirect('/');
+  }
+}
+
 // Profile user page
-app.get("/user/:id", (req, res) => {
-  User.find({ _id: req.params.id })
-    .lean()
-    .then((result) => {
-      if (
-        Object.keys(req.query).length === 0 &&
-        req.query.constructor === Object
-      ) {
-        var data = {
-          userData: result,
-        };
-      } else {
-        var data = {
-          userData: result,
-          query: req.query,
-        };
-      }
-      res.render("profile", { data });
-    });
+app.get("/user/:id", verifyToken, (req, res) => {
+  const authcookie = req.cookies.authcookie
+  console.log(authcookie);
+  jwt.verify(authcookie, secretKey, (err) => {
+    if (err) {
+      console.log(err);
+      // res.sendStatus(403);
+    } else {
+      User.find({ _id: req.params.id })
+        .lean()
+        .then((result) => {
+          if (
+            Object.keys(req.query).length === 0 &&
+            req.query.constructor === Object
+          ) {
+            var data = {
+              userData: result,
+            };
+          } else {
+            var data = {
+              userData: result,
+              query: req.query,
+            };
+          }
+          res.render("profile", { data });
+        });
+    }
+  });
 });
 // Updating user profile
 app.post("/user/:id", (req, res) => {
