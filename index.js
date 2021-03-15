@@ -9,8 +9,9 @@ const Product = require("./models/Product");
 const User = require("./models/User");
 const apiGames = require("./routes/api/games");
 const rand = require("random-key");
-const cookieParser = require('cookie-parser');
-const jwt_decode = require('jwt-decode');
+const cookieParser = require("cookie-parser");
+const jwt_decode = require("jwt-decode");
+const bcrypt = require("bcrypt");
 
 const app = express();
 
@@ -64,6 +65,16 @@ helpersHbs.handlebars.registerHelper("checkUpdatedPassword", function (value) {
     return true;
   }
 });
+helpersHbs.handlebars.registerHelper("notFound", function (value) {
+  const lastItem = value.pop();
+  if (lastItem.notFound !== "undefined") {
+    return true;
+  }
+});
+helpersHbs.handlebars.registerHelper("getFormData", function (value) {
+  for (userData in value) userData;
+  return value[userData].email;
+});
 
 // DB Config
 const db = require("./config/db").mongoURI;
@@ -93,69 +104,115 @@ app.get("/", (req, res) => {
     .then((result) => res.render("home", { allGames: result }));
 });
 
-// Create New User
+// Login or Create New User
 app.post("/", (req, res) => {
-  const data = {
-    name: req.body.username,
-    lastname: req.body.lastname,
-    email: req.body.email,
-    password: req.body.inputPassword,
-    role: 2,
-    createdAt: moment().tz("Europe/Madrid").format("DD/MM/YYYY HH:mm"),
-  };
-  const user = new User(data);
-  user
-    .save()
-    .then((user) => {
-      jwt.sign({ user }, secretKey, (err, token) => {
-        let cookieLifetime = (60 * 60 * 24 + 3600);
-        // let cookieLifetime = (3600);
-        res.cookie('authcookie',token,{maxAge:cookieLifetime,httpOnly:true,path:'/user/'}) 
-        const URL = "/user/".concat(`${user._id}`);
-        res.redirect(URL);
+  if (req.body.email && req.body.password) {
+    User.find({ newEmail: req.body.email })
+      .lean()
+      .then((user) => {
+        bcrypt.compare(
+          req.body.password,
+          user[0].password,
+          function (err, result) {
+            if (result) {
+              userData = user[0];
+              jwt.sign({ userData }, secretKey, (err, token) => {
+                let cookieLifetime = 60 * 60 * 24 + 3600;
+                res.cookie("authcookie", token, {
+                  maxAge: cookieLifetime,
+                  httpOnly: true,
+                  path: "/user/",
+                });
+                const URL = "/user/".concat(`${userData._id}`);
+                res.redirect(URL);
+              });
+            } else {
+              Product.find()
+                .sort({ title: -1 })
+                .then((result) => {
+                  result.push(req.body);
+                  result.push({ notFound: "password not found" });
+                  res.render("home", { allGames: result });
+                });
+            }
+          }
+        );
+      })
+      .catch((err) => {
+        Product.find()
+          .sort({ title: -1 })
+          .then((result) => {
+            result.push(req.body);
+            result.push({ notFound: "email not found" });
+            console.log(result);
+            res.render("home", { allGames: result });
+          });
       });
-    })
-    .catch((err) => {
-      console.log(err);
-      var fireEvent = "$('#error-user').modal('show')";
-      var errorData = {
-        message: err._message,
-        fire: fireEvent,
-      };
-      res.render("home", { errorUser: errorData });
-      // console.log(err);
-      // res. status(400).send('unable to save to database')
-    });
+  } else {
+    const data = {
+      name: req.body.username,
+      lastname: req.body.lastname,
+      newEmail: req.body.newEmail,
+      password: req.body.inputPassword,
+      role: 2,
+      createdAt: moment().tz("Europe/Madrid").format("DD/MM/YYYY HH:mm"),
+    };
+    const user = new User(data);
+    user
+      .save()
+      .then((user) => {
+        const userData = user;
+        jwt.sign({ userData }, secretKey, (err, token) => {
+          let cookieLifetime = 60 * 60 * 24 + 3600;
+          // let cookieLifetime = (3600);
+          res.cookie("authcookie", token, {
+            maxAge: cookieLifetime,
+            httpOnly: true,
+            path: "/user/",
+          });
+          const URL = "/user/".concat(`${userData._id}`);
+          res.redirect(URL);
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        var fireEvent = "$('#error-user').modal('show')";
+        var errorData = {
+          message: err._message,
+          fire: fireEvent,
+        };
+        res.render("home", { errorUser: errorData });
+        // console.log(err);
+        // res. status(400).send('unable to save to database')
+      });
+  }
 });
 
-//  FORMAT OF TOKEN
-// Authorization: Bearer <access_token>
-
+//  FORMAT OF TOKEN: Cookie
 function verifyToken(req, res, next) {
   // Check id in cookie
-  if ('authcookie' in req.cookies) {
+  if ("authcookie" in req.cookies) {
     let decoded = jwt_decode(req.cookies.authcookie);
-   if(decoded.user._id == req.params.id){
-     next();
-   }else{
-     res.redirect('/');
+    if (decoded.userData._id == req.params.id) {
+      //next middleware
+      next();
+    } else {
+      res.redirect("/");
     }
-    //next middleware
   } else {
     //Forbidden access
     // res.sendStatus(403);
-    res.redirect('/');
+    res.redirect("/");
   }
 }
 
 // Profile user page
 app.get("/user/:id", verifyToken, (req, res) => {
-  const authcookie = req.cookies.authcookie
-  console.log(authcookie);
+  const authcookie = req.cookies.authcookie;
   jwt.verify(authcookie, secretKey, (err) => {
     if (err) {
       console.log(err);
-      // res.sendStatus(403);
+      res.redirect("/");
     } else {
       User.find({ _id: req.params.id })
         .lean()
@@ -173,11 +230,19 @@ app.get("/user/:id", verifyToken, (req, res) => {
               query: req.query,
             };
           }
-          res.render("profile", { data });
+          const url = req.originalUrl.split("?")[0].concat("/logout");
+          res.render("profile", { data, url });
         });
     }
   });
 });
+
+// Logout
+app.get("/user/:id/logout", verifyToken, (req, res) => {
+  res.clearCookie("authcookie");
+  res.redirect("/");
+});
+
 // Updating user profile
 app.post("/user/:id", (req, res) => {
   if (req.body.updateUserData === "true") {

@@ -9,7 +9,6 @@ if (document.readyState == "loading") {
 }
 
 function ready() {
-  // getYear();
 
   var addToCartButtons = document.getElementsByClassName(
     "btn btn-lg btn-block btn-danger"
@@ -43,12 +42,12 @@ function toggleLogin() {
     document.querySelector("#loginForm").setAttribute("name", "register");
 
     //disable login form
-    document.querySelector("#newEmail").disabled = true;
+    document.querySelector("#email").disabled = true;
     document.querySelector("#inputLoginPassword").disabled = true;
     //enable registry form
     document.querySelector("#username").disabled = false;
     document.querySelector("#lastname").disabled = false;
-    document.querySelector("#email").disabled = false;
+    document.querySelector("#newEmail").disabled = false;
     document.querySelector("#inputPassword").disabled = false;
     document.querySelector("#inputPassword2").disabled = false;
     //change form data
@@ -64,12 +63,12 @@ function toggleLogin() {
     document.querySelector("#loginForm").setAttribute("name", "login");
 
     //enable login form
-    document.querySelector("#newEmail").disabled = false;
+    document.querySelector("#email").disabled = false;
     document.querySelector("#inputLoginPassword").disabled = false;
     //disable registry form
     document.querySelector("#username").disabled = true;
     document.querySelector("#lastname").disabled = true;
-    document.querySelector("#email").disabled = true;
+    document.querySelector("#newEmail").disabled = true;
     document.querySelector("#inputPassword").disabled = true;
     document.querySelector("#inputPassword2").disabled = true;
     //change form data

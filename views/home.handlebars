@@ -1,14 +1,22 @@
-{{> header}}
-{{> modals}}
+{{> login-header}}
+{{> modal-login}}
 {{> modal-alerts}}
 {{#if errorUser}}
- {{userError}}
+{{userError}}
 {{/if}}
 <!-- Products content -->
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
   <h1 class="display-4">Drag&Drop</h1>
   <p class="lead">You can add your products to the cart easily, drag the image,<br>
     and it will be added to your purchase.</p>
+  {{#if (notFound allGames)}}
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <strong>Email address or password not match.</strong> Give it another try.
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  {{/if }}
 </div>
 <div class="container">
   <div class="card-deck mb-3 text-center" id="products-list">
