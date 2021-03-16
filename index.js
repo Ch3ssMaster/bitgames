@@ -1,6 +1,5 @@
 const express = require("express");
 const mongoose = require("mongoose");
-// const bodyParser = require("body-parser");
 const path = require("path");
 const hbs = require("express-handlebars");
 const jwt = require("jsonwebtoken");
@@ -27,11 +26,12 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded());
 
-//helpers
-helpersHbs.handlebars.registerHelper("userError", function () {
-  var fireEvent = "$('#error-user').modal('show')";
-  return fireEvent;
-});
+// Custom Handlebar Helpers
+
+// helpersHbs.handlebars.registerHelper("userError", function () {
+//   var fireEvent = "$('#error-user').modal('show')";
+//   return fireEvent;
+// });
 helpersHbs.handlebars.registerHelper("switch", function (value, options) {
   this.switch_value = value;
   this.switch_break = false;
@@ -67,13 +67,34 @@ helpersHbs.handlebars.registerHelper("checkUpdatedPassword", function (value) {
 });
 helpersHbs.handlebars.registerHelper("notFound", function (value) {
   const lastItem = value.pop();
-  if (lastItem.notFound !== "undefined") {
+  value.push(lastItem);
+  if (
+    lastItem.notFound == "password not found" ||
+    lastItem.notFound == "email not found"
+  ) {
+    // console.log(lastItem.notFound);
     return true;
+  } else {
+    return false;
   }
 });
-helpersHbs.handlebars.registerHelper("getFormData", function (value) {
-  for (userData in value) userData;
-  return value[userData].email;
+helpersHbs.handlebars.registerHelper("userValidation", function (value) {
+  const lastItem = value.pop();
+  const userData = value.pop();
+  value.push(userData);
+  value.push(lastItem);
+  if (lastItem.userValidation == "The email already exists in the database.") {
+    return true;
+  } else {
+    return false;
+  }
+});
+helpersHbs.handlebars.registerHelper("getFormData", function (value, option) {
+  const lastItem = value.pop();
+  const userData = value.pop();
+  value.push(userData);
+  value.push(lastItem);
+  return userData[option];
 });
 
 // DB Config
@@ -95,10 +116,6 @@ app.use("/api/games", apiGames);
 
 // Homepage route
 app.get("/", (req, res) => {
-  if (req.query.user) {
-    // console.log(req.body);
-  }
-
   Product.find()
     .sort({ title: -1 })
     .then((result) => res.render("home", { allGames: result }));
@@ -144,7 +161,7 @@ app.post("/", (req, res) => {
           .then((result) => {
             result.push(req.body);
             result.push({ notFound: "email not found" });
-            console.log(result);
+            // console.log(result);
             res.render("home", { allGames: result });
           });
       });
@@ -176,14 +193,17 @@ app.post("/", (req, res) => {
       })
       .catch((err) => {
         console.log(err);
-        var fireEvent = "$('#error-user').modal('show')";
-        var errorData = {
-          message: err._message,
-          fire: fireEvent,
-        };
-        res.render("home", { errorUser: errorData });
-        // console.log(err);
-        // res. status(400).send('unable to save to database')
+        Product.find()
+          .sort({ title: -1 })
+          .then((result) => {
+            result.push(req.body);
+            result.push({
+              userValidation: "The email already exists in the database.",
+            });
+            res.render("home", { allGames: result });
+            // console.log(err);
+            // res. status(400).send('unable to save to database')
+          });
       });
   }
 });

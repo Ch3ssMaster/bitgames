@@ -1,63 +1,3 @@
-{{!-- Modal Cart --}}
-<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1"
-  aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">
-          <i class="fas fa-shopping-cart"></i>
-          Your shopping
-        </h5>
-        <button autocomplete="none" type="button" class="close text-danger font-weight-bolder" data-dismiss="modal"
-          aria-label="Close">
-          <span aria-hidden="true">
-            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-dash-square-fill" fill="currentColor"
-              xmlns="http://www.w3.org/2000/svg">
-              <path fill-rule="evenodd"
-                d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm2 7.5a.5.5 0 0 0 0 1h8a.5.5 0 0 0 0-1H4z" />
-            </svg>
-          </span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <table class="table table-striped table-hover">
-          <thead class="thead-dark">
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Item</th>
-              <th scope="col">Price</th>
-              <th scope="col">Quantity</th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- Dinamically add products -->
-          </tbody>
-        </table>
-      </div>
-      <div class="modal-footer">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col">
-              <h4>
-                <i class="fas fa-money-check"></i>
-                Subtotal: <span id="total-count">0</span> €
-              </h4>
-            </div>
-            <div class="col text-right">
-              <button autocomplete="none" type="button" class="disabled btn btn-danger mb-2" id="empty-cart">Empty this
-                cart</button>
-              <button autocomplete="none" type="button" class="disabled btn btn-primary mb-2 ml-2" id="btn-purchase"
-                data-dismiss="modal" data-toggle="modal">
-                Check Out!
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
 {{!-- Modal login --}}
 
 <form name="login" method="POST" action="/" id="loginForm">
@@ -75,16 +15,15 @@
             <div class="mb-3">
               <label for="email" class="col-form-label">Email:</label>
               <input name="email" autocomplete="none" type="email"
-                class="form-control shadow p-4 mb-1 bg-white border-dark rounded" value=" {{#if (notFound allGames)}}
-                {{#getFormData allGames}}
-                {{this}}
-                {{/getFormData}}
-                {{/if }}" id="email" required>
+                class="form-control shadow p-4 mb-1 bg-white border-dark rounded"
+                value="{{#if (notFound allGames)}}{{#getFormData allGames "email"}}{{this}}{{/getFormData}}{{/if }}"
+                id="email" required>
             </div>
             <div class="mb-3">
               <label for="inputLoginPassword" class="form-label">Password:</label>
-              <input name="password" autocomplete="none" type="password" id="inputLoginPassword"
-                class="form-control shadow p-4 mb-1 bg-white border-dark rounded" required>
+              <input name="password" autocomplete="none" type="password"
+                value="{{#if (notFound allGames)}}{{#getFormData allGames "password"}}{{this}}{{/getFormData}}{{/if }}"
+                id="inputLoginPassword" class="form-control shadow p-4 mb-1 bg-white border-dark rounded" required>
             </div>
           </div>
 
@@ -93,22 +32,26 @@
             <div class="mb-3">
               <label for="username" class="col-form-label">Name:</label>
               <input autocomplete="none" type="text" class="form-control shadow p-4 mb-1 bg-white border-dark rounded"
+                value="{{#if (userValidation allGames)}}{{#getFormData allGames "username"}}{{this}}{{/getFormData}}{{/if }}"
                 id="username" name="username" required disabled>
             </div>
             <div class="mb-3">
               <label for="lastname" class="col-form-label">LastName:</label>
               <input autocomplete="none" type="text" class="form-control shadow p-4 mb-1 bg-white border-dark rounded"
+                value="{{#if (userValidation allGames)}}{{#getFormData allGames "lastname"}}{{this}}{{/getFormData}}{{/if }}"
                 id="lastname" name="lastname" required disabled>
             </div>
             <div class="mb-3">
               <label for="newEmail" class="col-form-label">Email:</label>
               <input autocomplete="none" type="email" class="form-control shadow p-4 mb-1 bg-white border-dark rounded"
+                value="{{#if (userValidation allGames)}}{{#getFormData allGames "newEmail"}}{{this}}{{/getFormData}}{{/if }}"
                 id="newEmail" name="newEmail" required disabled>
             </div>
             <div class="mb-3">
               <label for="inputPassword" class="form-label">Password:</label>
               <div class="input-group">
                 <input autocomplete="none" type="password" id="inputPassword" name="inputPassword"
+                value="{{#if (userValidation allGames)}}{{#getFormData allGames "inputPassword"}}{{this}}{{/getFormData}}{{/if }}"
                   class="form-control shadow p-4 mb-1 bg-white border-dark rounded" aria-describedby="passwordHelpBlock"
                   required disabled>
                 <div class="input-group-append ml-1">
@@ -129,6 +72,7 @@
               <label for="inputPassword2" class="form-label">Password (repeat to verify):</label>
               <div class="input-group">
                 <input autocomplete="none" type="password" id="inputPassword2" name="inputPassword2"
+                value="{{#if (userValidation allGames)}}{{#getFormData allGames "inputPassword2"}}{{this}}{{/getFormData}}{{/if }}"
                   class="form-control shadow p-4 mb-1 bg-white border-dark rounded"
                   aria-describedby="passwordHelpBlock2" required disabled>
                 <div class="input-group-append ml-1">
@@ -166,20 +110,3 @@
     </div>
   </div>
 </form>
-
-{{!-- Alert error new user --}}
-<div id="error-user" class="modal fade">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-            aria-hidden="true">&times;</span></button>
-        <h4 id="alert-modal-title" class="modal-title"></h4>
-      </div>
-      <div id="alert-modal-body" class="modal-body"></div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
