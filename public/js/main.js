@@ -9,9 +9,14 @@ if (document.readyState == "loading") {
 }
 
 function ready() {
-  getYear();
-  validatePassword();
-  checkPasswordMatch();
+  var showPassword = document.querySelectorAll('[data-show="password"]');
+  for (var i = 0; i < showPassword.length; i++) {
+    var button = showPassword[i];
+    button.addEventListener("click", togglePassword);
+  }
+
+  document.getElementById("toggleLogin").addEventListener("click", toggleLogin);
+
   const validatePass = document.querySelector('input[name="inputPassword"]');
   const checkSecondPass = document.querySelector(
     'input[name="inputPassword2"]'
@@ -20,13 +25,19 @@ function ready() {
     validatePassword();
   });
   checkSecondPass.addEventListener("input", (e) => {
-    checkPasswordMatch();
+    validatePassword();
+    // checkPasswordMatch();
   });
   checkSecondPass.addEventListener("change", (e) => {
-    checkPasswordMatch();
+    validatePassword();
+    // checkPasswordMatch();
   });
-  var homeTab = document.querySelector("#home-tab");
-  var profileTab = document.querySelector("#profile-tab");
+  // var homeTab = document.querySelector("#home-tab");
+  // var profileTab = document.querySelector("#profile-tab");
+  
+  getYear();
+  // validatePassword();
+  // checkPasswordMatch();
 }
 
 function getYear() {
@@ -40,12 +51,16 @@ function validatePassword() {
   let rule = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,20}$/;
   if (toValidate.value.match(rule)) {
     toShow.classList.add("d-none");
-    // document.querySelector("#goLogin").disabled = false;
+    if (checkPasswordMatch()) {
+      document.querySelector("#goLogin").disabled = false;      
+    }else {
+      document.querySelector("#goLogin").disabled = true;
+    }
   } else {
-    toShow.classList.remove("d-none");
     document.querySelector("#goLogin").disabled = true;
+    toShow.classList.remove("d-none");
+    checkPasswordMatch();
   }
-  checkPasswordMatch();
 }
 
 function checkPasswordMatch() {
@@ -54,10 +69,11 @@ function checkPasswordMatch() {
   let toShow = document.querySelector("#passwordHelpBlock2");
   if (toValidate != toCompare) {
     toShow.classList.remove("d-none");
-    document.querySelector("#goLogin").disabled = true;
+    return false;
   } else {
-    document.querySelector("#goLogin").disabled = false;
+    // document.querySelector("#goLogin").disabled = false;
     toShow.classList.add("d-none");
+    return true;
   }
 }
 
@@ -82,3 +98,64 @@ function toggleUpdateUser(changeUserData) {
 $('a[data-toggle="tab"]').on("shown.bs.tab", function (e) {
   toggleUpdateUser(e.target.getAttribute("id")); // newly activated tab
 });
+function toggleLogin() {
+  let buttonText = document.querySelector("#toggleLogin").innerText;
+  if (buttonText == "Create Account") {
+    // set name attribute for login form
+    document.querySelector("#loginForm").setAttribute("name", "register");
+    
+    //disable login form
+    document.querySelector("#goLogin").disabled = true;
+    document.querySelector("#email").disabled = true;
+    document.querySelector("#inputLoginPassword").disabled = true;
+    //enable registry form
+    document.querySelector("#username").disabled = false;
+    document.querySelector("#lastname").disabled = false;
+    document.querySelector("#newEmail").disabled = false;
+    document.querySelector("#inputPassword").disabled = false;
+    document.querySelector("#inputPassword2").disabled = false;
+    //change form data
+    document.querySelector("#toggleLogin").innerText = "Login";
+    document
+    .querySelector("#toggleLogin")
+    .classList.remove("btn-outline-primary");
+    document.querySelector("#toggleLogin").classList.add("btn-primary");
+    document.querySelector("#goLogin").innerText = "Register";
+    document.querySelector("#loginModalLabel").innerText = "New User";
+  } else {
+    // set name attribute for login form
+    document.querySelector("#loginForm").setAttribute("name", "login");
+    
+    //enable login form
+    document.querySelector("#goLogin").disabled = false;
+    document.querySelector("#email").disabled = false;
+    document.querySelector("#inputLoginPassword").disabled = false;
+    //disable registry form
+    document.querySelector("#username").disabled = true;
+    document.querySelector("#lastname").disabled = true;
+    document.querySelector("#newEmail").disabled = true;
+    document.querySelector("#inputPassword").disabled = true;
+    document.querySelector("#inputPassword2").disabled = true;
+    //change form data
+    document.querySelector("#loginModalLabel").innerText = "Login";
+    document.querySelector("#toggleLogin").innerText = "Create Account";
+    document.querySelector("#toggleLogin").classList.remove("btn-primary");
+    document.querySelector("#toggleLogin").classList.add("btn-outline-primary");
+    document.querySelector("#goLogin").innerText = "Login";
+    document.querySelector("#goLogin").innerText = "Login";
+  }
+}
+function togglePassword(event) {
+  let element = event.target.closest("button");
+  let elementTarget = element.getAttribute("data-target");
+  // console.log(element.innerHTML);
+  let newElement = document.getElementById(elementTarget);
+  let type = newElement.getAttribute("type");
+  if (type == "password") {
+    newElement.setAttribute("type", "text");
+    element.innerHTML = '<i class="fas fa-eye-slash"></i>';
+  } else {
+    element.innerHTML = '<i class="fas fa-eye"></i>';
+    newElement.setAttribute("type", "password");
+  }
+}

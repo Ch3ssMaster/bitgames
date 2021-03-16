@@ -72,7 +72,6 @@ helpersHbs.handlebars.registerHelper("notFound", function (value) {
     lastItem.notFound == "password not found" ||
     lastItem.notFound == "email not found"
   ) {
-    // console.log(lastItem.notFound);
     return true;
   } else {
     return false;
@@ -96,6 +95,13 @@ helpersHbs.handlebars.registerHelper("getFormData", function (value, option) {
   value.push(lastItem);
   return userData[option];
 });
+// helpersHbs.handlebars.registerHelper("enableCart", function (value) {
+//   if (value.includes("store")) {
+//     return true;
+//   } else {
+//     return false;
+//   }
+// });
 
 // DB Config
 const db = require("./config/db").mongoURI;
@@ -119,6 +125,16 @@ app.get("/", (req, res) => {
   Product.find()
     .sort({ title: -1 })
     .then((result) => res.render("home", { allGames: result }));
+});
+
+// Store
+app.get("/store/:id", (req, res) => {
+  // const url = req.originalUrl;
+  Product.find()
+    .sort({ title: -1 })
+    .then((result) =>
+      res.render("store", { allGames: result, includeCart: true })
+    );
 });
 
 // Login or Create New User
@@ -250,8 +266,9 @@ app.get("/user/:id", verifyToken, (req, res) => {
               query: req.query,
             };
           }
-          const url = req.originalUrl.split("?")[0].concat("/logout");
-          res.render("profile", { data, url });
+          // const logout = req.originalUrl.split("?")[0].concat("/logout");
+          // const store = "/user/".concat(`${req.params.id}`);
+          res.render("profile", { data, includeCart: false });
         });
     }
   });

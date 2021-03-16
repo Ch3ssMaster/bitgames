@@ -1,14 +1,13 @@
 {{> login-header}}
 {{> modal-login}}
-{{> modal-cart}}
-{{> modal-alerts}}
-{{#if errorUser}}
+
+{{!-- {{#if errorUser}}
 {{userError}}
-{{/if}}
+{{/if}} --}}
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-  <h1 class="display-4">Drag&Drop</h1>
+  {{!-- <h1 class="display-4">Drag&Drop</h1>
   <p class="lead">You can add your products to the cart easily, drag the image,<br>
-    and it will be added to your purchase.</p>
+    and it will be added to your purchase.</p> --}}
   {{!-- Alert data do not match --}}
   {{#if (notFound allGames)}}
   <div class="alert alert-danger alert-dismissible fade show" role="alert">

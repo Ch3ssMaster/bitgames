@@ -1,7 +1,6 @@
 {{> logout-header}}
 {{> modal-logout}}
 <div class="container pt-5">
-    {{#each data.userData}}
     <div class="row justify-content-lg-center pt-5">
         <div class="col-12 col-md-6 col-lg-4 mb-3">
             <div class="card rounded border border-info mx-auto" style="width: 18rem;">
@@ -9,20 +8,20 @@
                 <div class="card-header bg-info text-white">
                     <h5 class="card-title text-center pt-3">
                         <strong>
-                            {{this.name}} {{this.lastname}}
+                            {{data.userData.[0].name}} {{data.userData.[0].lastname}}
                         </strong>
                     </h5>
                 </div>
                 <div class="card-body">
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item"><strong>Role:</strong>
-                            {{#switch this.role}}
+                            {{#switch data.userData.[0].role}}
                             {{#case 0}} Admin {{/case}}
                             {{#case 1}} Vendor {{/case}}
                             {{#default "User"}} {{/default}}
                             {{/switch}}
                         </li>
-                        <li class="list-group-item"><strong>Member from:</strong> {{this.createdAt}}</li>
+                        <li class="list-group-item"><strong>Member from:</strong> {{data.userData.[0].createdAt}}</li>
                     </ul>
                 </div>
             </div>
@@ -31,7 +30,7 @@
             <div class="container bg-info border border-info rounded mb-5 p-3">
                 <h2 class="display-4 text-center">
                     <i class="fas fa-gamepad text-white mr-3"></i> Welcome, <strong
-                        class="text-white">{{this.name}}</strong>
+                        class="text-white">{{data.userData.[0].name}}</strong>
                 </h2>
             </div>
             <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -48,12 +47,12 @@
                 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                     {{!-- User data --}}
                     <div class="container-fluid bg-white p-5 rounded-bottom border border-info">
-                        <form action="/user/{{this._id}}" method="POST" id="userData">
+                        <form action="/user/{{data.userData.[0]._id}}" method="POST" id="userData">
                             <input type="hidden" name="updateUserData" value="true">
                             <div class="form-group">
                                 <label for="newName">Name</label>
                                 <input type="text" class="form-control bg-light border-dark" id="newName"
-                                    aria-describedby="nameHelp" value="{{this.name}}" name="userName" required>
+                                    aria-describedby="nameHelp" value="{{data.userData.[0].name}}" name="userName" required>
                                 <small id="nameHelp" class="form-text text-muted">To <strong>change your name</strong>,
                                     write the new
                                     here and press submit</small>
@@ -61,7 +60,7 @@
                             <div class="form-group">
                                 <label for="newLastname">Lastname</label>
                                 <input type="text" class="form-control bg-light border-dark" id="newLastname"
-                                    aria-describedby="lastNameHelp" value="{{this.lastname}}" name="userLastName"
+                                    aria-describedby="lastNameHelp" value="{{data.userData.[0].lastname}}" name="userLastName"
                                     required>
                                 <small id="lastNameHelp" class="form-text text-muted">To <strong>change your
                                         lastname</strong>, write the
@@ -75,8 +74,9 @@
                     <div class="container-fluid bg-white p-5 rounded-bottom border border-info">
                         <div class="form-group">
                             <label for="newPassword">Password</label>
-                            <input name="newPassword" type="text" class="form-control bg-light border-dark" id="newPassword"
-                                aria-describedby="lastNameHelp" placeholder="Enter your new password" disabled required>
+                            <input name="newPassword" type="text" class="form-control bg-light border-dark"
+                                id="newPassword" aria-describedby="lastNameHelp" placeholder="Enter your new password"
+                                disabled required>
                             <small id="lastNameHelp" class="form-text text-muted">To <strong>change your
                                     password</strong>, write the
                                 new here and press submit</small>
@@ -87,13 +87,13 @@
                 </div>
             </div>
             <div class="container bg-info border border-info rounded mt-4 p-3 text-center">
-                <a class="btn btn-link shopping" href="/" role="button">
+                <a class="btn btn-link shopping" href="/store/{{data.userData.[0]._id}}" role="button">
                     Go Shopping!
                 </a>
             </div>
         </div>
     </div>
-    {{/each}}
+    {{!-- {{/each}} --}}
     <div class="row justify-content-md-center pt-5">
         {{#if (checkPostUpdated data) }}
         {{#if (checkUpdated data) }}

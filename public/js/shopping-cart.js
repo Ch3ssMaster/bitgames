@@ -9,7 +9,6 @@ if (document.readyState == "loading") {
 }
 
 function ready() {
-
   var addToCartButtons = document.getElementsByClassName(
     "btn btn-lg btn-block btn-danger"
   );
@@ -17,82 +16,11 @@ function ready() {
     var button = addToCartButtons[i];
     button.addEventListener("click", addToCartClicked);
   }
-  var showPassword = document.querySelectorAll('[data-show="password"]');
-  // console.log(showPassword);
-
-  for (var i = 0; i < showPassword.length; i++) {
-    var button = showPassword[i];
-    button.addEventListener("click", togglePassword);
-  }
 
   document.getElementById("empty-cart").addEventListener("click", emptyCart);
   document
     .getElementById("btn-purchase")
     .addEventListener("click", purchaseClicked);
-  document.getElementById("toggleLogin").addEventListener("click", toggleLogin);
-}
-// function getYear() {
-//   var year = new Date();
-//   document.getElementById("date").innerHTML += year.getFullYear();
-// }
-function toggleLogin() {
-  let buttonText = document.querySelector("#toggleLogin").innerText;
-  if (buttonText == "Create Account") {
-    // set name attribute for login form
-    document.querySelector("#loginForm").setAttribute("name", "register");
-
-    //disable login form
-    document.querySelector("#email").disabled = true;
-    document.querySelector("#inputLoginPassword").disabled = true;
-    //enable registry form
-    document.querySelector("#username").disabled = false;
-    document.querySelector("#lastname").disabled = false;
-    document.querySelector("#newEmail").disabled = false;
-    document.querySelector("#inputPassword").disabled = false;
-    document.querySelector("#inputPassword2").disabled = false;
-    //change form data
-    document.querySelector("#toggleLogin").innerText = "Login";
-    document
-      .querySelector("#toggleLogin")
-      .classList.remove("btn-outline-primary");
-    document.querySelector("#toggleLogin").classList.add("btn-primary");
-    document.querySelector("#goLogin").innerText = "Register";
-    document.querySelector("#loginModalLabel").innerText = "New User";
-  } else {
-    // set name attribute for login form
-    document.querySelector("#loginForm").setAttribute("name", "login");
-
-    //enable login form
-    document.querySelector("#email").disabled = false;
-    document.querySelector("#inputLoginPassword").disabled = false;
-    //disable registry form
-    document.querySelector("#username").disabled = true;
-    document.querySelector("#lastname").disabled = true;
-    document.querySelector("#newEmail").disabled = true;
-    document.querySelector("#inputPassword").disabled = true;
-    document.querySelector("#inputPassword2").disabled = true;
-    //change form data
-    document.querySelector("#loginModalLabel").innerText = "Login";
-    document.querySelector("#toggleLogin").innerText = "Create Account";
-    document.querySelector("#toggleLogin").classList.remove("btn-primary");
-    document.querySelector("#toggleLogin").classList.add("btn-outline-primary");
-    document.querySelector("#goLogin").innerText = "Login";
-    document.querySelector("#goLogin").innerText = "Login";
-  }
-}
-function togglePassword(event) {
-  let element = event.target.closest("button");
-  let elementTarget = element.getAttribute("data-target");
-  // console.log(element.innerHTML);
-  let newElement = document.getElementById(elementTarget);
-  let type = newElement.getAttribute("type");
-  if (type == "password") {
-    newElement.setAttribute("type", "text");
-    element.innerHTML = '<i class="fas fa-eye-slash"></i>';
-  } else {
-    element.innerHTML = '<i class="fas fa-eye"></i>';
-    newElement.setAttribute("type", "password");
-  }
 }
 
 document.getElementById("cart").onclick = function () {
