@@ -5,6 +5,7 @@ const hbs = require("express-handlebars");
 const jwt = require("jsonwebtoken");
 var moment = require("moment-timezone");
 const Product = require("./models/Product");
+const Purchase = require("./models/Purchases");
 const User = require("./models/User");
 const apiGames = require("./routes/api/games");
 const rand = require("random-key");
@@ -129,12 +130,36 @@ app.get("/", (req, res) => {
 
 // Store
 app.get("/store/:id", (req, res) => {
-  // const url = req.originalUrl;
+  const id = req.params.id;
   Product.find()
     .sort({ title: -1 })
     .then((result) =>
-      res.render("store", { allGames: result, includeCart: true })
+      res.render("store", { allGames: result, includeCart: true, id })
     );
+});
+
+// Save store
+app.post("/store/:id", (req, res) => {
+  const id = req.params.id;
+  let purchaseData = req.body.purchased;
+  console.log(purchaseData);
+  const price = purchaseData.length;
+  console.log(price);
+  const data = {
+    purchaser: id,
+    products: purchaseData,
+    price: price,
+  };
+  const purchase = new Purchase(data);
+  purchase.save().then(() => {
+    Product.find()
+      .sort({ title: -1 })
+      .then((result) =>
+        res.render("store", { allGames: result, includeCart: true, id })
+      );
+  }).catch((err)=>{
+    console.log(err);
+  });
 });
 
 // Login or Create New User
@@ -177,7 +202,6 @@ app.post("/", (req, res) => {
           .then((result) => {
             result.push(req.body);
             result.push({ notFound: "email not found" });
-            // console.log(result);
             res.render("home", { allGames: result });
           });
       });
