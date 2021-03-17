@@ -2,29 +2,9 @@
 {{> modal-logout}}
 <div class="container pt-5">
     <div class="row justify-content-lg-center pt-5">
+        {{!-- Profile --}}
         <div class="col-12 col-md-6 col-lg-4 mb-3">
-            <div class="card rounded border border-info mx-auto" style="width: 18rem;">
-                <img class="card-img-top" src="/img/vr-profile.png" alt="User image">
-                <div class="card-header bg-info text-white">
-                    <h5 class="card-title text-center pt-3">
-                        <strong>
-                            {{data.userData.[0].name}} {{data.userData.[0].lastname}}
-                        </strong>
-                    </h5>
-                </div>
-                <div class="card-body">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item"><strong>Role:</strong>
-                            {{#switch data.userData.[0].role}}
-                            {{#case 0}} Admin {{/case}}
-                            {{#case 1}} Vendor {{/case}}
-                            {{#default "User"}} {{/default}}
-                            {{/switch}}
-                        </li>
-                        <li class="list-group-item"><strong>Member from:</strong> {{data.userData.[0].createdAt}}</li>
-                    </ul>
-                </div>
-            </div>
+            {{> profile-card}}
         </div>
         <div class="col-12 col-md-6 col-lg-8 px-3">
             <div class="container bg-info border border-info rounded mb-5 p-3">
@@ -33,6 +13,7 @@
                         class="text-white">{{data.userData.[0].name}}</strong>
                 </h2>
             </div>
+            {{!-- Modify data --}}
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item">
                     <a class="nav-link active border-info border-bottom-0" id="home-tab" data-toggle="tab" href="#home"
@@ -52,7 +33,8 @@
                             <div class="form-group">
                                 <label for="newName">Name</label>
                                 <input type="text" class="form-control bg-light border-dark" id="newName"
-                                    aria-describedby="nameHelp" value="{{data.userData.[0].name}}" name="userName" required>
+                                    aria-describedby="nameHelp" value="{{data.userData.[0].name}}" name="userName"
+                                    required>
                                 <small id="nameHelp" class="form-text text-muted">To <strong>change your name</strong>,
                                     write the new
                                     here and press submit</small>
@@ -60,8 +42,8 @@
                             <div class="form-group">
                                 <label for="newLastname">Lastname</label>
                                 <input type="text" class="form-control bg-light border-dark" id="newLastname"
-                                    aria-describedby="lastNameHelp" value="{{data.userData.[0].lastname}}" name="userLastName"
-                                    required>
+                                    aria-describedby="lastNameHelp" value="{{data.userData.[0].lastname}}"
+                                    name="userLastName" required>
                                 <small id="lastNameHelp" class="form-text text-muted">To <strong>change your
                                         lastname</strong>, write the
                                     new here and press submit</small>
@@ -93,7 +75,6 @@
             </div>
         </div>
     </div>
-    {{!-- {{/each}} --}}
     <div class="row justify-content-md-center pt-5">
         {{#if (checkPostUpdated data) }}
         {{#if (checkUpdated data) }}

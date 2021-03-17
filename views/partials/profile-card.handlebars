@@ -1,0 +1,31 @@
+<div class="card rounded border border-info mx-auto" style="width: 18rem;">
+    <img class="card-img-top" src="/img/vr-profile.png" alt="User image">
+    <div class="card-header bg-info text-white">
+        <h5 class="card-title text-center pt-3">
+            <strong>
+                {{data.userData.[0].name}} {{data.userData.[0].lastname}}
+            </strong>
+        </h5>
+    </div>
+    <div class="card-body">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><strong>Role:</strong>
+                {{#switch data.userData.[0].role}}
+                {{#case 0}} Admin {{/case}}
+                {{#case 1}} Vendor {{/case}}
+                {{#default "User"}} {{/default}}
+                {{/switch}}
+            </li>
+            <li class="list-group-item"><strong>Member from:</strong> {{data.userData.[0].createdAt}}</li>
+            {{#if profile}}
+            <li class="list-group-item"><strong><a href="/user/{{data.userData.[0]._id}}">View</a> </strong> your
+                profile
+            </li>
+            {{else}}
+            <li class="list-group-item"><strong><a href="/invoices/{{data.userData.[0]._id}}">View</a> </strong> your
+                invoices
+            </li>
+            {{/if}}
+        </ul>
+    </div>
+</div>

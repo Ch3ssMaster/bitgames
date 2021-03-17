@@ -52,13 +52,13 @@ function purchaseClicked() {
   let products = document
     .querySelector("#productList")
     .getElementsByTagName("tr");
-  var productIds = [];
+  let data = [];
   for (let index = 1; index < products.length; index++) {
-    productIds.push(products[index].getAttribute("id"));
+    data.push(products[index].getAttribute("id"));
   }
   let price = document.querySelector("#total-count").innerHTML;
-  productIds.push(price);
-  document.querySelector('input[name=purchased]').value = productIds;
+  data.push(price);
+  document.querySelector("input[name=purchased]").value = data;
   document.getElementById("purchaseForm").submit();
   // $("#cartPurchased").modal("show");
   // setTimeout(function () {

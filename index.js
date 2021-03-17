@@ -29,10 +29,6 @@ app.use(express.urlencoded());
 
 // Custom Handlebar Helpers
 
-// helpersHbs.handlebars.registerHelper("userError", function () {
-//   var fireEvent = "$('#error-user').modal('show')";
-//   return fireEvent;
-// });
 helpersHbs.handlebars.registerHelper("switch", function (value, options) {
   this.switch_value = value;
   this.switch_break = false;
@@ -96,13 +92,16 @@ helpersHbs.handlebars.registerHelper("getFormData", function (value, option) {
   value.push(lastItem);
   return userData[option];
 });
-// helpersHbs.handlebars.registerHelper("enableCart", function (value) {
-//   if (value.includes("store")) {
-//     return true;
-//   } else {
-//     return false;
-//   }
-// });
+helpersHbs.handlebars.registerHelper("formatDate", function (value) {
+  let newDate = value.toString().split("GMT")[0];
+  return newDate;
+});
+helpersHbs.handlebars.registerHelper("incrementIndexValue", function (value) {
+  return value + 1;
+});
+helpersHbs.handlebars.registerHelper("isdefined", function (value) {
+  return value !== undefined;
+});
 
 // DB Config
 const db = require("./config/db").mongoURI;
@@ -141,25 +140,96 @@ app.get("/store/:id", (req, res) => {
 // Save store
 app.post("/store/:id", (req, res) => {
   const id = req.params.id;
-  let purchaseData = req.body.purchased;
-  console.log(purchaseData);
-  const price = purchaseData.length;
-  console.log(price);
+  let purchaseData = req.body.purchased.split(",");
+  // console.log(purchaseData);
+  const price = purchaseData.pop();
+  // console.log(price);
   const data = {
     purchaser: id,
     products: purchaseData,
     price: price,
   };
   const purchase = new Purchase(data);
-  purchase.save().then(() => {
-    Product.find()
-      .sort({ title: -1 })
-      .then((result) =>
-        res.render("store", { allGames: result, includeCart: true, id })
-      );
-  }).catch((err)=>{
-    console.log(err);
-  });
+  purchase
+    .save()
+    .then(() => {
+      Product.find()
+        .sort({ title: -1 })
+        .then((result) =>
+          res.render("store", {
+            allGames: result,
+            includeCart: true,
+            id,
+            success: true,
+          })
+        );
+    })
+    .catch((err) => {
+      Product.find()
+        .sort({ title: -1 })
+        .then((result) =>
+          res.render("store", {
+            allGames: result,
+            includeCart: true,
+            id,
+            success: false,
+          })
+        );
+    });
+});
+
+// Invoices
+app.get("/invoices/:id", (req, res) => {
+  const id = req.params.id;
+  Purchase.find({ purchaser: id })
+    .sort({ purchasedAt: -1 })
+    .lean()
+    .then((invoices) => {
+      let purchasedProducts = [];
+      invoices.forEach((element) => {
+        element.products.forEach((productId) => {
+          purchasedProducts.push(productId);
+        });
+      });
+      let uniqueProducts = [];
+      purchasedProducts.forEach((code) => {
+        if (!uniqueProducts.includes(code)) uniqueProducts.push(code);
+      });
+      // console.log(purchasedProducts);
+      // console.log(uniqueProducts);
+      Product.find({ _id: { $in: uniqueProducts } })
+        .sort({ title: -1 })
+        .lean()
+        .then((products) => {
+          User.find({ _id: id })
+            .lean()
+            .then((result) => {
+              var data = { userData: result };
+              let titles = [];
+              invoices.forEach((receipt) => {
+                receipt.products.forEach((code) => {
+                  products.forEach((product) => {
+                    if (product._id == code) {
+                      if (!titles.includes(product.title))
+                        titles.push(product.title);
+                    }
+                  });
+                });
+                receipt.titles = titles;
+                titles = [];
+              });
+              console.log(invoices);
+              res.render("invoices", {
+                invoices,
+                data,
+                products,
+                includeCart: false,
+                id,
+                profile: true,
+              });
+            });
+        });
+    });
 });
 
 // Login or Create New User
@@ -292,7 +362,7 @@ app.get("/user/:id", verifyToken, (req, res) => {
           }
           // const logout = req.originalUrl.split("?")[0].concat("/logout");
           // const store = "/user/".concat(`${req.params.id}`);
-          res.render("profile", { data, includeCart: false });
+          res.render("profile", { data, includeCart: false, profile: false });
         });
     }
   });

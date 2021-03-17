@@ -1,0 +1,41 @@
+<div class="container pt-5">
+    <div class="row justify-content-lg-center pt-5">
+        {{!-- Profile --}}
+        <div class="col-12 col-md-6 col-lg-4 mb-3">
+            {{> profile-card}}
+        </div>
+        <div class="col-12 col-md-6 col-lg-8 px-3">
+            <div class="container bg-info border border-info rounded mb-5 p-3 text-center">
+                <h2 class="display-4">
+                    <i class="fas fa-file-invoice text-white mr-3"></i> Welcome, <strong
+                        class="text-white">{{data.userData.[0].name}}</strong>
+                </h2>
+                <h3><em>Here you have a full list of your invoices</em></h3>
+            </div>
+            <table class="table table-hover table-striped mt-5">
+                <thead class="bg-info text-white">
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Products</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each invoices}}
+                    <tr>
+                        <th scope="row">{{this._id}}</th>
+                        <td>
+                            {{#each titles}}
+                            <strong>{{incrementIndexValue @index}}.</strong> {{this}}<br>
+                            {{/each}}
+                        </td>
+                        <td>{{#formatDate this.purchasedAt}}{{/formatDate}}</td>
+                        <td>{{~this.price}} €</td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
