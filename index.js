@@ -133,7 +133,7 @@ app.get("/store/:id", (req, res) => {
   Product.find()
     .sort({ title: -1 })
     .then((result) =>
-      res.render("store", { allGames: result, includeCart: true, id })
+      res.render("store", { allGames: result, includeCart: true, id, linkToProfile: true })
     );
 });
 
@@ -161,6 +161,7 @@ app.post("/store/:id", (req, res) => {
             includeCart: true,
             id,
             success: true,
+            linkToProfile: true,
           })
         );
     })
@@ -173,6 +174,7 @@ app.post("/store/:id", (req, res) => {
             includeCart: true,
             id,
             success: false,
+            linkToProfile: true,
           })
         );
     });
@@ -339,12 +341,13 @@ function verifyToken(req, res, next) {
 // Profile user page
 app.get("/user/:id", verifyToken, (req, res) => {
   const authcookie = req.cookies.authcookie;
+  const id = req.params.id;
   jwt.verify(authcookie, secretKey, (err) => {
     if (err) {
       console.log(err);
       res.redirect("/");
     } else {
-      User.find({ _id: req.params.id })
+      User.find({ _id: id })
         .lean()
         .then((result) => {
           if (
@@ -362,7 +365,7 @@ app.get("/user/:id", verifyToken, (req, res) => {
           }
           // const logout = req.originalUrl.split("?")[0].concat("/logout");
           // const store = "/user/".concat(`${req.params.id}`);
-          res.render("profile", { data, includeCart: false, profile: false });
+          res.render("profile", { data, includeCart: false, profile: false, id });
         });
     }
   });
