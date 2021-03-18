@@ -27,11 +27,11 @@
                         <th scope="row">{{this._id}}</th>
                         <td>
                             {{#each titles}}
-                            <strong>{{incrementIndexValue @index}}.</strong> {{this}}<br>
+                            <strong>{{~incrementIndexValue @index~}}.</strong> {{this~}}<br>
                             {{/each}}
                         </td>
                         <td>{{#formatDate this.purchasedAt}}{{/formatDate}}</td>
-                        <td>{{~this.price}} €</td>
+                        <td>{{~this.price~}}&nbsp;€</td>
                     </tr>
                     {{/each}}
                 </tbody>

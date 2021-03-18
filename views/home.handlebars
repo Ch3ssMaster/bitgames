@@ -4,13 +4,13 @@
 {{!-- {{#if errorUser}}
 {{userError}}
 {{/if}} --}}
-<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+<div class="pricing-header px-3 py-3 pt-md-5 mt-md-5 pb-md-4 mx-auto text-center">
   {{!-- <h1 class="display-4">Drag&Drop</h1>
   <p class="lead">You can add your products to the cart easily, drag the image,<br>
     and it will be added to your purchase.</p> --}}
   {{!-- Alert data do not match --}}
   {{#if (notFound allGames)}}
-  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+  <div class="alert alert-danger alert-dismissible fade show mt-md-5" role="alert">
     <strong>Email address or password not match.</strong> Give it another try.
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>
@@ -19,7 +19,7 @@
   {{/if }}
   {{!-- Alert email already exists in the database --}}
   {{#if (userValidation allGames)}}
-  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+  <div class="alert alert-danger alert-dismissible fade show mt-md-5" role="alert">
     <strong>Doh!</strong> Email has already been taken.
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>

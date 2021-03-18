@@ -18,12 +18,12 @@
             </li>
             <li class="list-group-item"><strong>Member from:</strong> {{data.userData.[0].createdAt}}</li>
             {{#if profile}}
-            <li class="list-group-item"><strong><a href="/user/{{data.userData.[0]._id}}">View</a> </strong> your
-                profile
+            <li class="list-group-item"><strong>View</strong><a href="/user/{{data.userData.[0]._id}}"> your
+                profile</a>
             </li>
             {{else}}
-            <li class="list-group-item"><strong><a href="/invoices/{{data.userData.[0]._id}}">View</a> </strong> your
-                invoices
+            <li class="list-group-item"><strong>View</strong><a href="/invoices/{{data.userData.[0]._id}}"> your
+                invoices</a>
             </li>
             {{/if}}
         </ul>
