@@ -16,6 +16,7 @@ const home = require("./routes/controllers/home");
 const profile = require("./routes/controllers/profile");
 const store = require("./routes/controllers/store");
 const invoices = require("./routes/controllers/invoices");
+const vendor = require("./routes/controllers/vendor");
 
 // JSON API
 const api = require("./routes/api/jsonData");
@@ -133,9 +134,11 @@ app.use("/store", store);
 // Invoices route
 app.use("/invoices", invoices);
 
+// Vendor route
+app.use("/vendor", vendor);
 
 
-
+// Server port
 const port = process.env.PORT || 5000;
 
 // DB connection

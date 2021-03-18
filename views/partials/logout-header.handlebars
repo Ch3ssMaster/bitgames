@@ -15,6 +15,9 @@
     {{#if linkToProfile}}
     <h5 class="mt-3 mr-5">Back to <a href="/user/{{id}}" class="text-white">profile page</a></h5>
     {{/if}}
+    {{#if addProducts}}
+    <h5 class="mt-3 mr-5">Add a <a href="/vendor/{{id}}/new" class="text-white"> new product</a></h5>
+    {{/if}}
     {{#if includeCart}}
     {{> shopping-cart}}
     {{/if}}

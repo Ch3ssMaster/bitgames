@@ -1,0 +1,53 @@
+<div class="container-fluid mt-5 pt-2">
+    <div class="row d-flex justify-content-center align-items-center mt-5 mx-3 bg-white">
+        <div class="col-3 text-center p-3 bg-light">
+            <h5 class="bg-danger text-white rounded p-3">Filters</h5>
+        </div>
+        <div class="col-9 text-center">
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-info">
+                    <a href="/vendor/{{id}}?view=all" class="text-white text-decoration-none">
+                        All products
+                    </a>
+                </button>
+                <button type="button" class="btn btn-info">
+                    <a href="/vendor/{{id}}?view=publisher" class="text-white text-decoration-none">
+                        By vendor
+                    </a>
+                </button>
+                <button type="button" class="btn btn-info">
+                    <a href="/vendor/{{id}}?view=title" class="text-white text-decoration-none">
+                        By title
+                    </a>
+                </button>
+                <button type="button" class="btn btn-info">
+                    <a href="/vendor/{{id}}?view=price" class="text-white text-decoration-none">
+                        By price
+                    </a>
+                </button>
+            </div>
+        </div>
+    </div>
+    {{#each allGames}}
+    <div class="row m-3 bg-white">
+        <div class="col-lg-4 d-flex justify-content-center py-3">
+            <img class="card-img w-50" src="/img/{{this._doc.img.localImg}}" alt="{{this._doc.title}}">
+        </div>
+        <div class="col-lg-6 p-3 bg-light border border-light">
+            <h4 class="my-0 font-weight-normal mb-2">{{this._doc.title}}</h4>
+            <div class="border-top w-100 mb-3"></div>
+            <p><strong>Description: </strong>{{this._doc.description}}</p>
+            <div class="border-top w-100 mb-3"></div>
+            <h5><strong>Publisher: </strong>{{this._doc.publisher}}</h5>
+            <div class="border-top w-100 mb-3"></div>
+            <h5><strong>Price: </strong>{{this._doc.price}} €</h5>
+        </div>
+        <div class="col-lg-2 d-flex align-items-center">
+            <div class="d-flex flex-column justify-content-around w-100 h-50 py-3">
+                <button type="button" class="btn btn-info btn-lg btn-block">Edit</button>
+                <button type="button" class="btn btn-danger btn-lg btn-block">Delete</button>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+</div>

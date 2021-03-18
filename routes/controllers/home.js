@@ -6,7 +6,6 @@ const jwt = security.jwt;
 const secretKey = security.secretKey;
 const bcrypt = security.bcrypt;
 // Models
-const Product = require("../../models/Product");
 const User = require("../../models/User");
 var moment = require("moment-timezone");
 
@@ -25,39 +24,47 @@ router.get("/", (req, res) => {
 
 // @route POST / (Home)
 // @desc Validate or create a new user
-// @access Public
+// @access Private (token access)
 
 router.post("/", (req, res) => {
   if (req.body.email && req.body.password) {
     User.find({ newEmail: req.body.email })
       .lean()
       .then((user) => {
-        bcrypt.compare(
-          req.body.password,
-          user[0].password,
-          function (err, result) {
-            if (result) {
-              userData = user[0];
-              jwt.sign({ userData }, secretKey, (err, token) => {
-                let paths = ["/user/", "/store/", "/invoices/"];
-                security.generateCookies(token, res, paths);
-                const URL = "/user/".concat(`${userData._id}`);
-                res.redirect(URL);
+        bcrypt.compare(req.body.password, user[0].password, (err, result) => {
+          if (result) {
+            userData = user[0];
+            jwt.sign({ userData }, secretKey, (err, token) => {
+              let paths = [];
+              switch (userData.role) {
+                case 0:
+                  paths = ["/admin/", "/user/", "/store/", "/invoices/"];
+                  break;
+                case 1:
+                  paths = ["/vendor/", "/user/", "/store/", "/invoices/"];
+                  break;
+
+                default:
+                  paths = ["/user/", "/store/", "/invoices/"];
+                  break;
+              }
+              let URL = paths[0].concat(`${userData._id}`);
+              security.generateCookies(token, res, paths);
+              res.redirect(URL);
+            });
+          } else {
+            Product.find()
+              .sort({ title: -1 })
+              .then((result) => {
+                result.push(req.body);
+                result.push({ notFound: "password not found" });
+                res.render("home", { allGames: result });
+              })
+              .catch((err) => {
+                console.log(err);
               });
-            } else {
-              Product.find()
-                .sort({ title: -1 })
-                .then((result) => {
-                  result.push(req.body);
-                  result.push({ notFound: "password not found" });
-                  res.render("home", { allGames: result });
-                })
-                .catch((err) => {
-                  console.log(err);
-                });
-            }
           }
-        );
+        });
       })
       .catch((err) => {
         Product.find()
