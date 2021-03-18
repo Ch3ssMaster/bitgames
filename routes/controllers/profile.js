@@ -7,15 +7,25 @@ const secretKey = security.secretKey;
 // Models
 const User = require("../../models/User");
 
-// @route GET /:id (Logout)
+// @route GET /user/:id/logout (Logout)
 // @desc Logout for actual user
-// @access Public
+// @access Private (token access)
 router.get("/:id/logout", security.verifyToken, (req, res) => {
-  res.clearCookie("authcookie");
-  res.redirect("/");
+  const authcookie = req.cookies.authcookie;
+  const id = req.params.id;
+  jwt.verify(authcookie, secretKey, (err) => {
+    if (err) {
+      console.log(err);
+      res.redirect("/");
+    } else {
+      let paths = ["/user/", "/store/", "/invoices/"];
+      security.deleteCookies(res, paths);
+      res.redirect("/");
+    }
+  });
 });
 
-// @route GET /:id (User Profile)
+// @route GET /user/:id (User Profile)
 /* @desc Shows user profile and enables to change
  * name, lastname, and password.
  * Links to invoices page and store page.
@@ -51,13 +61,16 @@ router.get("/:id", security.verifyToken, (req, res) => {
             profile: false,
             id,
           });
+        })
+        .catch((err) => {
+          console.log(err);
         });
     }
   });
 });
 
-// @route POST /:id (User Profile)
-/* @desc Save the changes for the user profile 
+// @route POST /user/:id (User Profile)
+/* @desc Save the changes for the user profile
  * and enables to change
  * name, lastname, and password.
  * Links to invoices page and store page.
@@ -81,15 +94,19 @@ router.post("/:id", (req, res) => {
     {
       $set: data,
     }
-  ).then((result) => {
-    const URL = "/user/".concat(
-      `${req.params.id}`,
-      "?updated=",
-      `${result.ok}`,
-      query
-    );
-    res.redirect(URL);
-  });
+  )
+    .then((result) => {
+      const URL = "/user/".concat(
+        `${req.params.id}`,
+        "?updated=",
+        `${result.ok}`,
+        query
+      );
+      res.redirect(URL);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });
 
 module.exports = router;

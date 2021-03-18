@@ -4,8 +4,8 @@ const router = express.Router();
 const security = require("../utilities/token-utils");
 const jwt = security.jwt;
 const secretKey = security.secretKey;
+const bcrypt = security.bcrypt;
 // Models
-const bcrypt = require("bcrypt");
 const Product = require("../../models/Product");
 const User = require("../../models/User");
 var moment = require("moment-timezone");
@@ -17,7 +17,10 @@ var moment = require("moment-timezone");
 router.get("/", (req, res) => {
   Product.find()
     .sort({ title: -1 })
-    .then((result) => res.render("home", { allGames: result }));
+    .then((result) => res.render("home", { allGames: result }))
+    .catch((err) => {
+      console.log(err);
+    });
 });
 
 // @route POST / (Home)
@@ -36,12 +39,8 @@ router.post("/", (req, res) => {
             if (result) {
               userData = user[0];
               jwt.sign({ userData }, secretKey, (err, token) => {
-                let cookieLifetime = 60 * 60 * 24 + 3600;
-                res.cookie("authcookie", token, {
-                  maxAge: cookieLifetime,
-                  httpOnly: true,
-                  path: "/user/",
-                });
+                let paths = ["/user/", "/store/", "/invoices/"];
+                security.generateCookies(token, res, paths);
                 const URL = "/user/".concat(`${userData._id}`);
                 res.redirect(URL);
               });
@@ -52,6 +51,9 @@ router.post("/", (req, res) => {
                   result.push(req.body);
                   result.push({ notFound: "password not found" });
                   res.render("home", { allGames: result });
+                })
+                .catch((err) => {
+                  console.log(err);
                 });
             }
           }
@@ -64,6 +66,9 @@ router.post("/", (req, res) => {
             result.push(req.body);
             result.push({ notFound: "email not found" });
             res.render("home", { allGames: result });
+          })
+          .catch((err) => {
+            console.log(err);
           });
       });
   } else {
@@ -104,6 +109,9 @@ router.post("/", (req, res) => {
             res.render("home", { allGames: result });
             // console.log(err);
             // res. status(400).send('unable to save to database')
+          })
+          .catch((err) => {
+            console.log(err);
           });
       });
   }

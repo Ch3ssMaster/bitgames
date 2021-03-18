@@ -6,9 +6,7 @@ const app = express();
 const mongoose = require("mongoose");
 
 // Security modules
-// const jwt = require("jsonwebtoken");
-// const secretKey = require("./config/secretKey").secretKey;
-const cookieParser = require("cookie-parser");
+const cookieParser = require("./routes/utilities/token-utils").cookieParser;
 
 // Static routes
 const path = require("path");
@@ -20,7 +18,7 @@ const store = require("./routes/controllers/store");
 const invoices = require("./routes/controllers/invoices");
 
 // JSON API
-const apiGames = require("./routes/api/games");
+const api = require("./routes/api/jsonData");
 
 // Views
 const hbs = require("express-handlebars");
@@ -121,7 +119,7 @@ const { request } = require("http");
 app.use(express.static(path.join(__dirname, "public")));
 
 // Get JSON with all products
-app.use("/api/games", apiGames);
+app.use("/api/", api);
 
 // Homepage route
 app.use("/", home);

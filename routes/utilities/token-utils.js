@@ -2,6 +2,8 @@
 const jwt = require("jsonwebtoken");
 const secretKey = require("../../config/secretKey").secretKey;
 const jwt_decode = require("jwt-decode");
+const bcrypt = require("bcrypt");
+const cookieParser = require("cookie-parser");
 
 //  FORMAT OF TOKEN: Cookie
 const verifyToken = (req, res, next) => {
@@ -20,4 +22,31 @@ const verifyToken = (req, res, next) => {
     res.redirect("/");
   }
 };
-module.exports = security = { jwt, secretKey, jwt_decode, verifyToken };
+
+const generateCookies = (token, res, paths) => {
+  paths.forEach((route) => {
+    let cookieLifetime = 60 * 60 * 24 + 3600;
+    res.cookie("authcookie", token, {
+      maxAge: cookieLifetime,
+      httpOnly: true,
+      path: route,
+    });
+  });
+};
+
+const deleteCookies = (res, paths) => {
+  paths.forEach((route) => {
+    res.clearCookie("authcookie", route);
+  });
+};
+
+module.exports = security = {
+  jwt,
+  secretKey,
+  jwt_decode,
+  cookieParser,
+  bcrypt,
+  verifyToken,
+  generateCookies,
+  deleteCookies,
+};

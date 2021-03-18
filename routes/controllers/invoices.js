@@ -1,61 +1,82 @@
 const express = require("express");
 const router = express.Router();
-const verifyToken = require("../utilities/token-utils");
 // Token Security
-const jwt = require("jsonwebtoken");
-const secretKey = require("../../config/secretKey").secretKey;
+const security = require("../utilities/token-utils");
+const jwt = security.jwt;
+const secretKey = security.secretKey;
 
-router.get("/:id", (req, res) => {
+// @route GET /invoices/:id (User Profile)
+/* @desc Shows user invoices.
+ * Links to invoices page and store page.
+ */
+// @access Private (token access)
+
+router.get("/:id", security.verifyToken, (req, res) => {
   const id = req.params.id;
-  Purchase.find({ purchaser: id })
-    .sort({ purchasedAt: -1 })
-    .lean()
-    .then((invoices) => {
-      let purchasedProducts = [];
-      invoices.forEach((element) => {
-        element.products.forEach((productId) => {
-          purchasedProducts.push(productId);
-        });
-      });
-      let uniqueProducts = [];
-      purchasedProducts.forEach((code) => {
-        if (!uniqueProducts.includes(code)) uniqueProducts.push(code);
-      });
-      // console.log(purchasedProducts);
-      // console.log(uniqueProducts);
-      Product.find({ _id: { $in: uniqueProducts } })
-        .sort({ title: -1 })
+  const authcookie = req.cookies.authcookie;
+  jwt.verify(authcookie, secretKey, (err) => {
+    if (err) {
+      console.log(err);
+      res.redirect("/");
+    } else {
+      Purchase.find({ purchaser: id })
+        .sort({ purchasedAt: -1 })
         .lean()
-        .then((products) => {
-          User.find({ _id: id })
-            .lean()
-            .then((result) => {
-              var data = { userData: result };
-              let titles = [];
-              invoices.forEach((receipt) => {
-                receipt.products.forEach((code) => {
-                  products.forEach((product) => {
-                    if (product._id == code) {
-                      if (!titles.includes(product.title))
-                        titles.push(product.title);
-                    }
-                  });
-                });
-                receipt.titles = titles;
-                titles = [];
-              });
-              console.log(invoices);
-              res.render("invoices", {
-                invoices,
-                data,
-                products,
-                includeCart: false,
-                id,
-                profile: true,
-              });
+        .then((invoices) => {
+          let purchasedProducts = [];
+          invoices.forEach((element) => {
+            element.products.forEach((productId) => {
+              purchasedProducts.push(productId);
             });
+          });
+          let uniqueProducts = [];
+          purchasedProducts.forEach((code) => {
+            if (!uniqueProducts.includes(code)) uniqueProducts.push(code);
+          });
+          Product.find({ _id: { $in: uniqueProducts } })
+            .sort({ title: -1 })
+            .lean()
+            .then((products) => {
+              User.find({ _id: id })
+                .lean()
+                .then((result) => {
+                  var data = { userData: result };
+                  let titles = [];
+                  invoices.forEach((receipt) => {
+                    receipt.products.forEach((code) => {
+                      products.forEach((product) => {
+                        if (product._id == code) {
+                          if (!titles.includes(product.title))
+                            titles.push(product.title);
+                        }
+                      });
+                    });
+                    receipt.titles = titles;
+                    titles = [];
+                  });
+                  console.log(invoices);
+                  res.render("invoices", {
+                    invoices,
+                    data,
+                    products,
+                    includeCart: false,
+                    id,
+                    profile: true,
+                  });
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        })
+        .catch((err) => {
+          console.log(err);
         });
-    });
+    }
+  });
 });
 
 module.exports = router;
