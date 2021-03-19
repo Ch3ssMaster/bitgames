@@ -1,0 +1,76 @@
+<div class="container-fluid mt-5 pt-2">
+    <div class="row w-75 bg-light mx-auto my-5 p-5 new-product">
+        <div class="col-xl-9 col-lg-10 col-md-12 col-sm-12 mx-auto">
+            <div class="row mb-4">
+                <div class="col-12">
+                    <h5 class="d-inline-block">Add Product</h5>
+                    <div class="border-top"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-12 mb-3">
+                    <form action="/product/{{id}}/new" name="newProduct">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="gameTitle">Title</span>
+                            </div>
+                            <input type="text" name="title" class="form-control" aria-label="Title"
+                                aria-describedby="gameTitle" required>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Description</span>
+                            </div>
+                            <textarea name="description" class="form-control" rows="5" aria-label="Description"
+                                required></textarea>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="publisherSelector">Publisher</label>
+                            </div>
+                            <select class="custom-select" id="publisherSelector" name="publisher" required>
+                                <option selected>Choose...</option>
+                                <option value="0">Rockstar Games</option>
+                                <option value="1">Electronic Arts</option>
+                                <option value="2">Eko Software</option>
+                                <option value="3">Ubisoft</option>
+                            </select>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="imgURL">Cover IMG (URL)</span>
+                            </div>
+                            <input type="text" class="form-control" id="basic-url" aria-describedby="imgURL">
+                        </div>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">€</span>
+                            </div>
+                            <input type="text" name="price" class="form-control" aria-label="Product price" required>
+                            <div class="input-group-append">
+                                <span class="input-group-text">.00</span>
+                            </div>
+                        </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-12 mx-auto mb-4">
+                    <div class="product-img-default mx-auto bg-warning text-white border border-white rounded">
+                        <span class="fa-stack fa-2x">
+                            <i class="fas fa-circle fa-stack-2x text-dark"></i>
+                            <i class="fas fa-cloud-upload-alt fa-stack-1x fa-inverse"
+                                onclick="document.getElementById('fileInput').click();"></i>
+                        </span>
+                    </div>
+                    <div class="custom-file mt-3 mb-3">
+                        <input id="fileInput" name="gameIMG" type="file" style="display:none;">
+                        <input type="button" class="btn btn-warning btn-block mx-auto" value="Upload Product Image"
+                            onclick="document.getElementById('fileInput').click();">
+                    </div>
+                </div>
+                <div class="col-12 mt-3">
+                    <button type="submit" class="btn btn-info btn-block">Add Product Now</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,4 +1,25 @@
 <div class="container-fluid mt-5 pt-2">
+    {{!-- {{#if ({{deleted.n eq 1)}} --}}
+    {{#if (checkDeleted deleted)}}
+    {{#if (deletedResult deleted)}}
+    <div class="container-fluid mt-3 mx-3">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Successfully deleted!</strong> The product has been deleted from the database.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {{else}}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Ooops!</strong> Something went wrong. Try it again or contact with de administrator.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
+    {{/if}}
+    {{/if}}
+    {{!-- {{/if}} --}}
     <div class="row d-flex justify-content-center align-items-center mt-5 mx-3 bg-white">
         <div class="col-3 text-center p-3 bg-light">
             <h5 class="bg-danger text-white rounded p-3">Filters</h5>
@@ -44,8 +65,10 @@
         </div>
         <div class="col-lg-2 d-flex align-items-center">
             <div class="d-flex flex-column justify-content-around w-100 h-50 py-3">
-                <button type="button" class="btn btn-info btn-lg btn-block">Edit</button>
-                <button type="button" class="btn btn-danger btn-lg btn-block">Delete</button>
+                <a href="/products/{{this._doc._id}}" class="btn btn-info btn-lg btn-block" role="button"
+                    aria-pressed="true">Edit</a>
+                <a href="/vendor/{{../id}}?delete={{this._doc._id}}" class="btn btn-danger btn-lg btn-block"
+                    role="button" aria-pressed="true">Delete</a>
             </div>
         </div>
     </div>

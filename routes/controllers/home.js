@@ -16,7 +16,9 @@ var moment = require("moment-timezone");
 router.get("/", (req, res) => {
   Product.find()
     .sort({ title: -1 })
-    .then((result) => res.render("home", { allGames: result }))
+    .then((result) => {
+      res.render("home", { allGames: result, post: false });
+    })
     .catch((err) => {
       console.log(err);
     });
@@ -41,7 +43,13 @@ router.post("/", (req, res) => {
                   paths = ["/admin/", "/user/", "/store/", "/invoices/"];
                   break;
                 case 1:
-                  paths = ["/vendor/", "/user/", "/store/", "/invoices/"];
+                  paths = [
+                    "/vendor/",
+                    "/user/",
+                    "/store/",
+                    "/invoices/",
+                    "/product/",
+                  ];
                   break;
 
                 default:
@@ -58,7 +66,7 @@ router.post("/", (req, res) => {
               .then((result) => {
                 result.push(req.body);
                 result.push({ notFound: "password not found" });
-                res.render("home", { allGames: result });
+                res.render("home", { allGames: result, post: true });
               })
               .catch((err) => {
                 console.log(err);
@@ -72,7 +80,7 @@ router.post("/", (req, res) => {
           .then((result) => {
             result.push(req.body);
             result.push({ notFound: "email not found" });
-            res.render("home", { allGames: result });
+            res.render("home", { allGames: result, post: true });
           })
           .catch((err) => {
             console.log(err);
@@ -113,7 +121,7 @@ router.post("/", (req, res) => {
             result.push({
               userValidation: "The email already exists in the database.",
             });
-            res.render("home", { allGames: result });
+            res.render("home", { allGames: result, post: true });
             // console.log(err);
             // res. status(400).send('unable to save to database')
           })

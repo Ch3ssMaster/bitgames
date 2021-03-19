@@ -17,6 +17,7 @@ const profile = require("./routes/controllers/profile");
 const store = require("./routes/controllers/store");
 const invoices = require("./routes/controllers/invoices");
 const vendor = require("./routes/controllers/vendor");
+const products = require("./routes/controllers/products");
 
 // JSON API
 const api = require("./routes/api/jsonData");
@@ -108,6 +109,20 @@ helpersHbs.handlebars.registerHelper("incrementIndexValue", function (value) {
 helpersHbs.handlebars.registerHelper("isdefined", function (value) {
   return value !== undefined;
 });
+helpersHbs.handlebars.registerHelper("checkDeleted", function (value) {
+  if (Object.keys(value).length > 0) {
+    return true;
+  } else {
+    return false;
+  }
+});
+helpersHbs.handlebars.registerHelper("deletedResult", function (value) {
+  if (value.ok == 1 && value.deletedCount == 1) {
+    return true;
+  } else {
+    return false;
+  }
+});
 
 // DB Config
 const db = require("./config/db").mongoURI;
@@ -137,6 +152,8 @@ app.use("/invoices", invoices);
 // Vendor route
 app.use("/vendor", vendor);
 
+// Products management route
+app.use("/product", products);
 
 // Server port
 const port = process.env.PORT || 5000;

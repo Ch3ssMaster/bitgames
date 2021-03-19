@@ -25,7 +25,7 @@ const verifyToken = (req, res, next) => {
 
 const generateCookies = (token, res, paths) => {
   paths.forEach((route) => {
-    let cookieLifetime = 60 * 60 * 24 + 3600;
+    let cookieLifetime = 60 * 60 * 48 + 3600;
     res.cookie("authcookie", token, {
       maxAge: cookieLifetime,
       httpOnly: true,

@@ -54,6 +54,7 @@ h5 {
 button.close:focus {
   outline: none;
 }
+
 /* Pulse */
 @-webkit-keyframes hvr-pulse {
   25% {
@@ -89,15 +90,16 @@ button.close:focus {
   -webkit-animation-iteration-count: infinite;
   animation-iteration-count: infinite;
 }
+
 /* Login */
 #loginModal {
   font-size: 1.3em;
 }
-#loginModal .modal-footer button{
+#loginModal .modal-footer button {
   font-size: 1.1em;
   text-transform: capitalize;
 }
-#loginModal .modal-header{
+#loginModal .modal-header {
   background-color: #98c1d9;
   color: #edf5f5;
   font-weight: bold;
@@ -106,12 +108,11 @@ button.close:focus {
   font-size: 1.4em;
   color: #293241;
 }
-/* Cards */
 
+/* Cards */
 .pricing-header {
   max-width: 700px;
 }
-
 .card-deck .card {
   min-width: 220px;
   max-width: 270px;
@@ -122,7 +123,6 @@ button.close:focus {
   -webkit-transform: translateX(-3px);
   transform: translateX(-3px);
 }
-
 .bd-placeholder-img {
   font-size: 1.125rem;
   text-anchor: middle;
@@ -131,6 +131,7 @@ button.close:focus {
   -ms-user-select: none;
   user-select: none;
 }
+
 /* Shopping list */
 .fa-shopping-cart,
 .fa-money-check {
@@ -328,6 +329,39 @@ footer small {
 .alert {
   font-size: 1.4em;
 }
+
+/* New product */
+.new-product h5 {
+  font-family: "Comfortaa", cursive;
+  font-size: 1.8em;
+}
+.new-product label,
+.new-product input,
+.new-product span,
+.new-product select {
+  font-family: "Share Tech Mono", monospace;
+  font-size: 1.2em;
+}
+.new-product button,
+.custom-file input
+ {
+  font-family: "Share Tech Mono", monospace;
+  font-size: 1.5em;
+}
+.new-product input .new-product button {
+  font-weight: bold;
+}
+.product-img-default {
+  max-width: 100%;
+  height: 240px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.new-product .fa-stack {
+  font-size: 1.5em;
+}
+
 /* Responsive */
 @media (max-width: 800px) and (min-width: 768px) {
   html {

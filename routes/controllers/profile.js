@@ -18,7 +18,7 @@ router.get("/:id/logout", security.verifyToken, (req, res) => {
       console.log(err);
       res.redirect("/");
     } else {
-      let paths = ["/user/", "/store/", "/invoices/"];
+      let paths = ["/user/", "/store/", "/invoices/", "/admin/", "/product/", "/vendor/"];
       security.deleteCookies(res, paths);
       res.redirect("/");
     }

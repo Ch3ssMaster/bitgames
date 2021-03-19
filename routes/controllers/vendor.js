@@ -20,6 +20,13 @@ router.get("/:id", (req, res) => {
     //   console.log(err);
     //   res.redirect("/");
     // } else {
+    let deleted = {};
+    if ("delete" in req.query) {
+      let toDelete = { _id: req.query.delete };
+      Product.deleteOne(toDelete)
+        .then((result) => (deleted = result))
+        .catch((err) => console.log(err));
+    }
     let order = {};
     switch (req.query.view) {
       case "title":
@@ -38,7 +45,12 @@ router.get("/:id", (req, res) => {
     Product.find()
       .sort(order)
       .then((result) => {
-        res.render("vendor", { allGames: result, id, addProducts: true });
+        res.render("vendor", {
+          allGames: result,
+          id,
+          addProducts: true,
+          deleted,
+        });
       })
       .catch((err) => {
         console.log(err);
