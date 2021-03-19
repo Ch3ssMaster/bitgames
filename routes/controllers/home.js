@@ -56,8 +56,8 @@ router.post("/", (req, res) => {
                   paths = ["/user/", "/store/", "/invoices/"];
                   break;
               }
-              let URL = paths[0].concat(`${userData._id}`);
               security.generateCookies(token, res, paths);
+              let URL = paths[0].concat(`${userData._id}`);
               res.redirect(URL);
             });
           } else {
@@ -101,13 +101,8 @@ router.post("/", (req, res) => {
       .then((user) => {
         const userData = user;
         jwt.sign({ userData }, secretKey, (err, token) => {
-          let cookieLifetime = 60 * 60 * 24 + 3600;
-          // let cookieLifetime = (3600);
-          res.cookie("authcookie", token, {
-            maxAge: cookieLifetime,
-            httpOnly: true,
-            path: "/user/",
-          });
+          paths = ["/user/", "/store/", "/invoices/"];
+          security.generateCookies(token, res, paths);
           const URL = "/user/".concat(`${userData._id}`);
           res.redirect(URL);
         });

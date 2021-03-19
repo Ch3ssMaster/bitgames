@@ -9,35 +9,48 @@ if (document.readyState == "loading") {
 }
 
 function ready() {
-  var showPassword = document.querySelectorAll('[data-show="password"]');
-  for (var i = 0; i < showPassword.length; i++) {
-    var button = showPassword[i];
-    button.addEventListener("click", togglePassword);
+  let showPassword = document.querySelectorAll('[data-show="password"]');
+  if (showPassword) {
+    for (var i = 0; i < showPassword.length; i++) {
+      var button = showPassword[i];
+      button.addEventListener("click", togglePassword);
+    }
+  }
+  let toggleLoginButton = document.getElementById("toggleLogin");
+  if (toggleLoginButton) {
+    toggleLoginButton.addEventListener("click", toggleLogin);
+  }
+  let validatePass = document.querySelector('input[name="inputPassword"]');
+  if (validatePass) {
+    validatePass.addEventListener("input", (e) => {
+      validatePassword();
+    });
+  }
+  let checkSecondPass = document.querySelector('input[name="inputPassword2"]');
+  if (checkSecondPass) {
+    checkSecondPass.addEventListener("input", (e) => {
+      validatePassword();
+    });
+    checkSecondPass.addEventListener("change", (e) => {
+      validatePassword();
+    });
+  }
+  let uploadIcon = document.getElementById("uploadIcon");
+  if (uploadIcon) {
+    uploadIcon.addEventListener("click", (e) => {
+      document.querySelector("#fileInput").click();
+    });
+  }
+  let uploadButton = document.getElementById("uploadButton");
+  if (uploadButton) {
+    uploadButton.addEventListener("click", (e) => {
+      document.querySelector("#fileInput").click();
+    });
   }
 
-  document.getElementById("toggleLogin").addEventListener("click", toggleLogin);
-
-  const validatePass = document.querySelector('input[name="inputPassword"]');
-  const checkSecondPass = document.querySelector(
-    'input[name="inputPassword2"]'
-  );
-  validatePass.addEventListener("input", (e) => {
-    validatePassword();
-  });
-  checkSecondPass.addEventListener("input", (e) => {
-    validatePassword();
-    // checkPasswordMatch();
-  });
-  checkSecondPass.addEventListener("change", (e) => {
-    validatePassword();
-    // checkPasswordMatch();
-  });
+  getYear();
   // var homeTab = document.querySelector("#home-tab");
   // var profileTab = document.querySelector("#profile-tab");
-  
-  getYear();
-  // validatePassword();
-  // checkPasswordMatch();
 }
 
 function getYear() {
@@ -52,8 +65,8 @@ function validatePassword() {
   if (toValidate.value.match(rule)) {
     toShow.classList.add("d-none");
     if (checkPasswordMatch()) {
-      document.querySelector("#goLogin").disabled = false;      
-    }else {
+      document.querySelector("#goLogin").disabled = false;
+    } else {
       document.querySelector("#goLogin").disabled = true;
     }
   } else {
@@ -103,7 +116,7 @@ function toggleLogin() {
   if (buttonText == "Create Account") {
     // set name attribute for login form
     document.querySelector("#loginForm").setAttribute("name", "register");
-    
+
     //disable login form
     document.querySelector("#goLogin").disabled = true;
     document.querySelector("#email").disabled = true;
@@ -117,15 +130,15 @@ function toggleLogin() {
     //change form data
     document.querySelector("#toggleLogin").innerText = "Login";
     document
-    .querySelector("#toggleLogin")
-    .classList.remove("btn-outline-primary");
+      .querySelector("#toggleLogin")
+      .classList.remove("btn-outline-primary");
     document.querySelector("#toggleLogin").classList.add("btn-primary");
     document.querySelector("#goLogin").innerText = "Register";
     document.querySelector("#loginModalLabel").innerText = "New User";
   } else {
     // set name attribute for login form
     document.querySelector("#loginForm").setAttribute("name", "login");
-    
+
     //enable login form
     document.querySelector("#goLogin").disabled = false;
     document.querySelector("#email").disabled = false;

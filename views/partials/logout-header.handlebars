@@ -18,6 +18,9 @@
     {{#if addProducts}}
     <h5 class="mt-3 mr-5">Add a <a href="/product/{{id}}/new" class="text-white"> new product</a></h5>
     {{/if}}
+    {{#if viewProducts}}
+    <h5 class="mt-3 mr-5">View <a href="/vendor/{{id}}" class="text-white"> all products</a></h5>
+    {{/if}}
     {{#if includeCart}}
     {{> shopping-cart}}
     {{/if}}

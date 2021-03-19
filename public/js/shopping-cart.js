@@ -9,23 +9,76 @@ if (document.readyState == "loading") {
 }
 
 function ready() {
-  var addToCartButtons = document.getElementsByClassName(
-    "btn btn-lg btn-block btn-danger"
-  );
-  for (var i = 0; i < addToCartButtons.length; i++) {
-    var button = addToCartButtons[i];
-    button.addEventListener("click", addToCartClicked);
-  }
+  let cart = document.querySelector("#cart");
+  if (cart) {
+    console.log("running!");
+    var addToCartButtons = document.getElementsByClassName(
+      "btn btn-lg btn-block btn-danger"
+    );
+    for (var i = 0; i < addToCartButtons.length; i++) {
+      var button = addToCartButtons[i];
+      button.addEventListener("click", addToCartClicked);
+    }
 
-  document.getElementById("empty-cart").addEventListener("click", emptyCart);
-  document
-    .getElementById("btn-purchase")
-    .addEventListener("click", purchaseClicked);
+    document.getElementById("empty-cart").addEventListener("click", emptyCart);
+    document
+      .getElementById("btn-purchase")
+      .addEventListener("click", purchaseClicked);
+    document.getElementById("cart").onclick = function () {
+      this.classList.remove("hvr-pulse");
+    };
+    // Make items draggables
+
+    const list_items = document.querySelectorAll(".draggable");
+    // const cart = document.querySelector("#cart");
+    let draggedItem = null;
+
+    for (let i = 0; i < list_items.length; i++) {
+      const item = list_items[i];
+
+      item.addEventListener("dragstart", function () {
+        draggedItem = item;
+        setTimeout(function () {
+          item.style.opacity = "0.5";
+        }, 200);
+      });
+
+      item.addEventListener("dragend", function () {
+        setTimeout(function () {
+          draggedItem.style.opacity = "1";
+          draggedItem = null;
+        }, 200);
+      });
+    }
+
+    // Make drop into cart
+
+    cart.addEventListener("dragover", function (e) {
+      e.preventDefault();
+    });
+
+    cart.addEventListener("dragenter", function (e) {
+      e.preventDefault();
+    });
+
+    cart.addEventListener("drop", function (e) {
+      this.classList.add("hvr-pulse");
+      var productId = draggedItem.getAttribute("product-id");
+      var title = draggedItem.querySelector("img").getAttribute("alt");
+      var price = draggedItem
+        .querySelector("small")
+        .innerText.replace(" €", "");
+      var imageSrc = draggedItem.querySelector("img").src;
+      var imageSrc = imageSrc.substring(imageSrc.lastIndexOf("/") + 1);
+      addItemToCart(productId, title, price, imageSrc);
+      updateCartTotal();
+    });
+
+    // cart.addEventListener('dragleave', function (e) {
+    // });
+  }
 }
 
-document.getElementById("cart").onclick = function () {
-  this.classList.remove("hvr-pulse");
-};
 function toggleShoppingControls(enable) {
   if (enable) {
     document.getElementById("empty-cart").classList.remove("disabled");
@@ -223,51 +276,3 @@ function updateCartTotal() {
   total = Math.round(total * 100) / 100;
   document.getElementById("total-count").innerText = total;
 }
-
-// Make items draggables
-
-const list_items = document.querySelectorAll(".draggable");
-const cart = document.querySelector("#cart");
-let draggedItem = null;
-
-for (let i = 0; i < list_items.length; i++) {
-  const item = list_items[i];
-
-  item.addEventListener("dragstart", function () {
-    draggedItem = item;
-    setTimeout(function () {
-      item.style.opacity = "0.5";
-    }, 200);
-  });
-
-  item.addEventListener("dragend", function () {
-    setTimeout(function () {
-      draggedItem.style.opacity = "1";
-      draggedItem = null;
-    }, 200);
-  });
-}
-
-// Make drop into cart
-
-cart.addEventListener("dragover", function (e) {
-  e.preventDefault();
-});
-
-cart.addEventListener("dragenter", function (e) {
-  e.preventDefault();
-});
-
-// cart.addEventListener('dragleave', function (e) {
-// });
-
-cart.addEventListener("drop", function (e) {
-  this.classList.add("hvr-pulse");
-  var productId = draggedItem.getAttribute("product-id");
-  var title = draggedItem.querySelector("img").getAttribute("alt");
-  var price = draggedItem.querySelector("small").innerText.replace(" €", "");
-  var imageSrc = draggedItem.querySelector("img").src;
-  var imageSrc = imageSrc.substring(imageSrc.lastIndexOf("/") + 1);
-  addItemToCart(productId, title, price, imageSrc);
-  updateCartTotal();
-});

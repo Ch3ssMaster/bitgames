@@ -9,7 +9,7 @@ const mongoose = require("mongoose");
 const cookieParser = require("./routes/utilities/token-utils").cookieParser;
 
 // Static routes
-const path = require("path");
+// const path = require("path");
 
 // Controllers
 const home = require("./routes/controllers/home");
@@ -36,6 +36,9 @@ app.use(cookieParser());
 // Bodyparser Middleware
 app.use(express.json());
 app.use(express.urlencoded());
+
+// Upload files
+// app.use(fileUpload());
 
 // Custom Handlebar Helpers
 helpersHbs.handlebars.registerHelper("switch", function (value, options) {
@@ -109,6 +112,13 @@ helpersHbs.handlebars.registerHelper("incrementIndexValue", function (value) {
 helpersHbs.handlebars.registerHelper("isdefined", function (value) {
   return value !== undefined;
 });
+helpersHbs.handlebars.registerHelper("isEqual", function (value, option) {
+  if (value == option) {
+    return true;
+  } else {
+    return false;
+  }
+});
 helpersHbs.handlebars.registerHelper("checkDeleted", function (value) {
   if (Object.keys(value).length > 0) {
     return true;
@@ -132,7 +142,8 @@ const { request } = require("http");
 
 // Routes
 // Static folder
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static("public"));
+// app.use(express.static(path.join(__dirname, "public")));
 
 // Get JSON with all products
 app.use("/api/", api);
