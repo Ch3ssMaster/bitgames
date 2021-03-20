@@ -1,6 +1,6 @@
 // bitGames v1.0.0-alpha (https://github.com/Ch3ssMaster/bitgames)
 // Copyright 2021 Antonio Cebrián Mesa
-// Licensed under MIT (https://github.com/Ch3ssMaster/bitgames/blob/main/LICENSE)
+// Licensed under MIT (https://github.com/Ch3ssMaster/bitgames/blob/main/LICENSE.md)
 
 if (document.readyState == "loading") {
   document.addEventListener("DOMContentLoaded", ready);

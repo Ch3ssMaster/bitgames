@@ -1,3 +1,8 @@
+/* 
+ * bitGames v1.0.0-alpha (https://github.com/Ch3ssMaster/bitgames)
+ * Copyright 2021 Antonio Cebrián Mesa
+ * Licensed under MIT (https://github.com/Ch3ssMaster/bitgames/blob/main/LICENSE.md)
+ */
 // Express generator
 const express = require("express");
 const serverApp = express();
