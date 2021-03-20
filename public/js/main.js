@@ -56,9 +56,8 @@ function ready() {
     });
   }
 
+  // validatePassword();
   getYear();
-  // var homeTab = document.querySelector("#home-tab");
-  // var profileTab = document.querySelector("#profile-tab");
 }
 
 // Show loaded img for products
@@ -98,13 +97,16 @@ function validatePassword() {
     toShow.classList.add("d-none");
     if (checkPasswordMatch()) {
       document.querySelector("#goLogin").disabled = false;
+      return true;
     } else {
       document.querySelector("#goLogin").disabled = true;
+      return false;
     }
   } else {
     document.querySelector("#goLogin").disabled = true;
     toShow.classList.remove("d-none");
     checkPasswordMatch();
+    return false;
   }
 }
 
@@ -143,6 +145,7 @@ function toggleUpdateUser(changeUserData) {
 $('a[data-toggle="tab"]').on("shown.bs.tab", function (e) {
   toggleUpdateUser(e.target.getAttribute("id")); // newly activated tab
 });
+
 function toggleLogin() {
   let buttonText = document.querySelector("#toggleLogin").innerText;
   if (buttonText == "Create Account") {
@@ -150,7 +153,9 @@ function toggleLogin() {
     document.querySelector("#loginForm").setAttribute("name", "register");
 
     //disable login form
-    document.querySelector("#goLogin").disabled = true;
+    if (!validatePassword()) {
+      document.querySelector("#goLogin").disabled = true;      
+    }
     document.querySelector("#email").disabled = true;
     document.querySelector("#inputLoginPassword").disabled = true;
     //enable registry form

@@ -11,16 +11,15 @@ const Product = require("../../models/Product");
 // @desc GET All products (Products endpoint)
 // @access Private (token access)
 
-// router.get("/:id", security.verifyToken, (req, res) => {
-router.get("/:id", (req, res) => {
+router.get("/:id", security.verifyToken, (req, res) => {
   let authcookie = req.cookies.authcookie;
   let id = req.params.id;
 
-  // jwt.verify(authcookie, secretKey, (err) => {
-  //   if (err) {
-  //     console.log(err);
-  //     res.redirect("/");
-  //   } else {
+  jwt.verify(authcookie, secretKey, (err) => {
+    if (err) {
+      console.log(err);
+      res.redirect("/");
+    } else {
       let deleted = {};
       if ("delete" in req.query) {
         let toDelete = { _id: req.query.delete };
@@ -56,8 +55,8 @@ router.get("/:id", (req, res) => {
         .catch((err) => {
           console.log(err);
         });
-  //   }
-  // });
+    }
+  });
 });
 
 module.exports = router;

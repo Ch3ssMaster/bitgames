@@ -150,11 +150,10 @@
                                 </div> --}}
                             </div>
                             <div class="custom-file mt-3 mb-3">
-                                <input id="fileInput" name="fileIMG" type="file" 
+                                <input id="fileInput" name="fileIMG" type="file" class="d-none">
                                 {{#if toUpdate}}
-                                value="/img/{{~data.img.localImg~}}"
+                                <input type="hidden" name="originalCover" value="{{~data.img.localImg~}}">
                                 {{/if}}
-                                class="d-none">
                                 <button type="button" class="btn btn-warning btn-block mx-auto mt-3"
                                     id="uploadButton">Upload
                                     Product Image</button>

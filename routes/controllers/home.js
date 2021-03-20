@@ -29,6 +29,7 @@ router.get("/", (req, res) => {
 // @access Private (token access)
 
 router.post("/", (req, res) => {
+  // Login
   if (req.body.email && req.body.password) {
     User.find({ newEmail: req.body.email })
       .lean()
@@ -40,7 +41,7 @@ router.post("/", (req, res) => {
               let paths = [];
               switch (userData.role) {
                 case 0:
-                  paths = ["/admin/", "/user/", "/store/", "/invoices/"];
+                  paths = ["/user/", "/admin/", "/store/", "/invoices/"];
                   break;
                 case 1:
                   paths = [
@@ -80,12 +81,14 @@ router.post("/", (req, res) => {
           .then((result) => {
             result.push(req.body);
             result.push({ notFound: "email not found" });
+            console.log(result);
             res.render("home", { allGames: result, post: true });
           })
           .catch((err) => {
             console.log(err);
           });
       });
+    // Create a new user
   } else {
     const data = {
       name: req.body.username,
@@ -116,6 +119,7 @@ router.post("/", (req, res) => {
             result.push({
               userValidation: "The email already exists in the database.",
             });
+            console.log(result);
             res.render("home", { allGames: result, post: true });
             // console.log(err);
             // res. status(400).send('unable to save to database')

@@ -16,13 +16,13 @@
               <label for="email" class="col-form-label">Email:</label>
               <input name="email" autocomplete="none" type="email"
                 class="form-control shadow p-4 mb-1 bg-white border-dark rounded" {{#if post}}
-                value="{{#if (notFound allGames)}}{{#getFormData allGames " email"}}{{this}}{{/getFormData}}{{/if }}"
+                value="{{#if (notFound allGames)}}{{#getFormData allGames "email"}}{{this}}{{/getFormData}}{{/if }}"
                 {{/if}} id="email" required>
             </div>
             <div class="mb-3">
               <label for="inputLoginPassword" class="form-label">Password:</label>
               <input name="password" autocomplete="none" type="password" {{#if post}}
-                value="{{#if (notFound allGames)}}{{#getFormData allGames " password"}}{{this}}{{/getFormData}}{{/if }}"
+                value="{{#if (notFound allGames)}}{{#getFormData allGames "password"}}{{this}}{{/getFormData}}{{/if }}"
                 {{/if}} id="inputLoginPassword" class="form-control shadow p-4 mb-1 bg-white border-dark rounded"
                 required>
             </div>
@@ -33,27 +33,23 @@
             <div class="mb-3">
               <label for="username" class="col-form-label">Name:</label>
               <input autocomplete="none" type="text" class="form-control shadow p-4 mb-1 bg-white border-dark rounded"
-                value="{{#if (userValidation allGames)}}{{#getFormData allGames "
-                username"}}{{this}}{{/getFormData}}{{/if }}" id="username" name="username" required disabled>
+                value="{{#if (userValidation allGames)}}{{#getFormData allGames "username"}}{{this}}{{/getFormData}}{{/if }}" id="username" name="username" required disabled>
             </div>
             <div class="mb-3">
               <label for="lastname" class="col-form-label">LastName:</label>
               <input autocomplete="none" type="text" class="form-control shadow p-4 mb-1 bg-white border-dark rounded"
-                value="{{#if (userValidation allGames)}}{{#getFormData allGames "
-                lastname"}}{{this}}{{/getFormData}}{{/if }}" id="lastname" name="lastname" required disabled>
+                value="{{#if (userValidation allGames)}}{{#getFormData allGames "lastname"}}{{this}}{{/getFormData}}{{/if }}" id="lastname" name="lastname" required disabled>
             </div>
             <div class="mb-3">
               <label for="newEmail" class="col-form-label">Email:</label>
               <input autocomplete="none" type="email" class="form-control shadow p-4 mb-1 bg-white border-dark rounded"
-                value="{{#if (userValidation allGames)}}{{#getFormData allGames "
-                newEmail"}}{{this}}{{/getFormData}}{{/if }}" id="newEmail" name="newEmail" required disabled>
+                value="{{#if (userValidation allGames)}}{{#getFormData allGames "newEmail"}}{{this}}{{/getFormData}}{{/if }}" id="newEmail" name="newEmail" required disabled>
             </div>
             <div class="mb-3">
               <label for="inputPassword" class="form-label">Password:</label>
               <div class="input-group">
                 <input autocomplete="none" type="password" id="inputPassword" name="inputPassword"
-                  value="{{#if (userValidation allGames)}}{{#getFormData allGames "
-                  inputPassword"}}{{this}}{{/getFormData}}{{/if }}"
+                  value="{{#if (userValidation allGames)}}{{#getFormData allGames "inputPassword"}}{{this}}{{/getFormData}}{{/if }}"
                   class="form-control shadow p-4 mb-1 bg-white border-dark rounded" aria-describedby="passwordHelpBlock"
                   required disabled>
                 <div class="input-group-append ml-1">
@@ -74,8 +70,7 @@
               <label for="inputPassword2" class="form-label">Password (repeat to verify):</label>
               <div class="input-group">
                 <input autocomplete="none" type="password" id="inputPassword2" name="inputPassword2"
-                  value="{{#if (userValidation allGames)}}{{#getFormData allGames "
-                  inputPassword2"}}{{this}}{{/getFormData}}{{/if }}"
+                  value="{{#if (userValidation allGames)}}{{#getFormData allGames "inputPassword2"}}{{this}}{{/getFormData}}{{/if }}"
                   class="form-control shadow p-4 mb-1 bg-white border-dark rounded"
                   aria-describedby="passwordHelpBlock2" required disabled>
                 <div class="input-group-append ml-1">
