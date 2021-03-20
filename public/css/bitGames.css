@@ -343,8 +343,7 @@ footer small {
   font-size: 1.2em;
 }
 .new-product button,
-.custom-file input
- {
+.custom-file input {
   font-family: "Share Tech Mono", monospace;
   font-size: 1.5em;
 }
@@ -357,6 +356,10 @@ footer small {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.product-img-default img,
+#uploadButton {
+  max-width: 250px;
 }
 .new-product .fa-stack {
   font-size: 1.5em;

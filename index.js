@@ -1,15 +1,9 @@
 // Express generator
 const express = require("express");
-const app = express();
-
-// Schemas for MongoDB
-const mongoose = require("mongoose");
+const serverApp = express();
 
 // Security modules
 const cookieParser = require("./routes/utilities/token-utils").cookieParser;
-
-// Static routes
-// const path = require("path");
 
 // Controllers
 const home = require("./routes/controllers/home");
@@ -26,19 +20,16 @@ const api = require("./routes/api/jsonData");
 const hbs = require("express-handlebars");
 
 // Handlebars Middleware
-app.engine("handlebars", hbs({ defaultLayout: "main" }));
-app.set("view engine", "handlebars");
+serverApp.engine("handlebars", hbs({ defaultLayout: "main" }));
+serverApp.set("view engine", "handlebars");
 var helpersHbs = hbs.create({});
 
 // Cookie Parser
-app.use(cookieParser());
+serverApp.use(cookieParser());
 
 // Bodyparser Middleware
-app.use(express.json());
-app.use(express.urlencoded());
-
-// Upload files
-// app.use(fileUpload());
+serverApp.use(express.json());
+serverApp.use(express.urlencoded());
 
 // Custom Handlebar Helpers
 helpersHbs.handlebars.registerHelper("switch", function (value, options) {
@@ -135,45 +126,43 @@ helpersHbs.handlebars.registerHelper("deletedResult", function (value) {
 });
 
 // DB Config
-const db = require("./config/db").mongoURI;
-const { title } = require("process");
-const { response } = require("express");
-const { request } = require("http");
+const db = require("./config/db");
+// const { title } = require("process");
+// const { response } = require("express");
+// const { request } = require("http");
 
 // Routes
 // Static folder
-app.use(express.static("public"));
-// app.use(express.static(path.join(__dirname, "public")));
+serverApp.use(express.static("./public"));
 
 // Get JSON with all products
-app.use("/api/", api);
+serverApp.use("/api/", api);
 
 // Homepage route
-app.use("/", home);
+serverApp.use("/", home);
 
 // Profile user route
-app.use("/user", profile);
+serverApp.use("/user", profile);
 
 // Purchases route
-app.use("/store", store);
+serverApp.use("/store", store);
 
 // Invoices route
-app.use("/invoices", invoices);
+serverApp.use("/invoices", invoices);
 
 // Vendor route
-app.use("/vendor", vendor);
+serverApp.use("/vendor", vendor);
 
 // Products management route
-app.use("/product", products);
-
-// Server port
-const port = process.env.PORT || 5000;
+serverApp.use("/product", products);
 
 // DB connection
-mongoose
-  .connect(db)
+db.mongoose
+  .connect(db.mongoURI)
   .then(() => {
     console.log("MongoDB Connected...");
-    app.listen(port, () => console.log(`Server started on port ${port}`));
+    serverApp.listen(db.port, () =>
+      console.log(`Server started on port ${db.port}`)
+    );
   })
   .catch((err) => console.log(err));

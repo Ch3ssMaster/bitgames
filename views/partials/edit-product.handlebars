@@ -1,5 +1,28 @@
 <div class="container-fluid mt-5 pt-2">
     <div class="row w-75 bg-light mx-auto my-5 p-5 new-product">
+        {{#if toUpdate}}
+        {{#if updateAlert}}
+        {{#if updated}}
+        <div class="container-fluid mt-3 mx-3">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Success!</strong> The product has been updated.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+        {{else}}
+        <div class="container-fluid mt-3 mx-3">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Ooops!</strong> Something went wrong updating the product, contact the administrator.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+        {{/if}}
+        {{/if}}
+        {{/if}}
         {{#if saved}}
         <div class="container-fluid mt-3 mx-3">
             <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -27,95 +50,128 @@
                     <div class="border-top"></div>
                 </div>
             </div>
-            <form action="/product/{{id}}/new" name="newProduct" method="POST" encType="multipart/form-data">
-                <div class="row">
-                    <div class="col-xl-6 col-lg-6 col-md-12 mb-3">
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="gameTitle">Title</span>
+            {{#if toUpdate}}
+            <form action="/product/{{id}}?edit={{productId}}" name="newProduct" method="POST"
+                encType="multipart/form-data">
+                {{else}}
+                <form action="/product/{{id}}/new" name="newProduct" method="POST" encType="multipart/form-data">
+                    {{/if}}
+                    <div class="row">
+                        <div class="col-xl-6 col-lg-6 col-md-12 mb-3">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="gameTitle">Title</span>
+                                </div>
+                                <input autocomplete="none" type="text" name="title" class="form-control"
+                                    aria-label="Title" {{#unless duplicateTitle}}
+                                    value="{{#if data.title}}{{~data.title~}}{{/if}}" {{/unless}}
+                                    aria-describedby="gameTitle" required>
                             </div>
-                            <input autocomplete="none" type="text" name="title" class="form-control" aria-label="Title"
-                                aria-describedby="gameTitle" required>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Description</span>
+                                </div>
+                                <textarea name="description" class="form-control" rows="5" ~ aria-label="Description"
+                                    required>{{#if data.description}}{{~data.description~}}{{/if}}</textarea>
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="publisherSelector">Publisher</label>
+                                </div>
+                                <select class="custom-select" id="publisherSelector" name="publisher" required>
+                                    {{#if data.publisher}}
+                                    <option>Choose...</option>
+                                    {{else}}
+                                    <option selected>Choose...</option>
+                                    {{/if}}
+                                    {{#if (isEqual data.publisher 'Rockstar Games')}}
+                                    <option value="0" selected>Rockstar Games</option>
+                                    {{else}}
+                                    <option value="0">Rockstar Games</option>
+                                    {{/if}}
+                                    {{#if (isEqual data.publisher 'Electronic Arts')}}
+                                    <option value="1" selected>Electronic Arts</option>
+                                    {{else}}
+                                    <option value="1">Electronic Arts</option>
+                                    {{/if}}
+                                    {{#if (isEqual data.publisher 'Eko Software')}}
+                                    <option value="2" selected>Eko Software</option>
+                                    {{else}}
+                                    <option value="2">Eko Software</option>
+                                    {{/if}}
+                                    {{#if (isEqual data.publisher 'Ubisoft')}}
+                                    <option value="3" selected>Ubisoft</option>
+                                    {{else}}
+                                    <option value="3">Ubisoft</option>
+                                    {{/if}}
+                                </select>
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="imgURL">Cover IMG (URL)</span>
+                                </div>
+                                <input autocomplete="none" name="linkIMG" type="text" class="form-control" id="linkIMG"
+                                    aria-describedby="imgURL"
+                                    value="{{#if data.img.coverImg}}{{~data.img.coverImg~}}{{/if}}">
+                            </div>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">€</span>
+                                </div>
+                                <input autocomplete="none" type="number" step="0.01" min="0" max="1000" name="price"
+                                    value="{{#if data.price}}{{~data.price~}}{{/if}}" class="form-control"
+                                    aria-label="Product price" required>
+                                <div class="input-group-append">
+                                    <span class="input-group-text">.00</span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">Description</span>
+                        <div class="col-xl-6 col-lg-6 col-md-12 mx-auto mb-4">
+                            {{!-- {{#unless duplicateTitle}} --}}
+                            <div class="product-img-default mx-auto mt-4" id="uploadIcon">
+                                {{!-- {{else}}
+                                <div class="product-img-default mx-auto bg-warning text-white border border-white rounded"
+                                    id="uploadIcon">
+                                    {{/unless}}
+                                    {{#unless duplicateTitle}}{{#if data.img.localImg}} --}}
+                                    {{#if toUpdate}}
+                                    <img src="/img/{{~data.img.localImg~}}" alt="{{~data.title~}}" class="my-3"
+                                        id="game-cover-img">
+                                    {{else}}
+                                    <img src="/img/default-cover.jpg" alt="default cover image" class="my-3"
+                                        id="game-cover-img">
+                                    {{/if}}
+                                    {{!-- <span class="fa-stack fa-2x">
+                                        <i class="fas fa-circle fa-stack-2x text-dark"></i>
+                                        <i class="fas fa-cloud-upload-alt fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                    {{/unless}} --}}
+                                    {{!--
+                                </div> --}}
                             </div>
-                            <textarea name="description" class="form-control" rows="5" ~ aria-label="Description"
-                                required>{{#if data.description}}{{~data.description~}}{{/if}}</textarea>
-                        </div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <label class="input-group-text" for="publisherSelector">Publisher</label>
-                            </div>
-                            <select class="custom-select" id="publisherSelector" name="publisher" required>
-                                {{#if data.publisher}}
-                                <option>Choose...</option>
-                                {{else}}
-                                <option selected>Choose...</option>
+                            <div class="custom-file mt-3 mb-3">
+                                <input id="fileInput" name="fileIMG" type="file" 
+                                {{#if toUpdate}}
+                                value="/img/{{~data.img.localImg~}}"
                                 {{/if}}
-                                {{#if (isEqual data.publisher 'Rockstar Games')}}
-                                <option value="0" selected>Rockstar Games</option>
-                                {{else}}
-                                <option value="0">Rockstar Games</option>
-                                {{/if}}
-                                {{#if (isEqual data.publisher 'Electronic Arts')}}
-                                <option value="1" selected>Electronic Arts</option>
-                                {{else}}
-                                <option value="1">Electronic Arts</option>
-                                {{/if}}
-                                {{#if (isEqual data.publisher 'Eko Software')}}
-                                <option value="2" selected>Eko Software</option>
-                                {{else}}
-                                <option value="2">Eko Software</option>
-                                {{/if}}
-                                {{#if (isEqual data.publisher 'Ubisoft')}}
-                                <option value="3" selected>Ubisoft</option>
-                                {{else}}
-                                <option value="3">Ubisoft</option>
-                                {{/if}}
-                            </select>
-                        </div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="imgURL">Cover IMG (URL)</span>
-                            </div>
-                            <input autocomplete="none" name="linkIMG" type="text" class="form-control" id="linkIMG"
-                                aria-describedby="imgURL" value="{{#if data.img.coverImg}}{{~data.img.coverImg~}}{{/if}}">
-                        </div>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">€</span>
-                            </div>
-                            <input autocomplete="none" type="number" step="0.01" min="0" max="1000" name="price"
-                            value="{{#if data.price}}{{~data.price~}}{{/if}}"
-                                class="form-control" aria-label="Product price" required>
-                            <div class="input-group-append">
-                                <span class="input-group-text">.00</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-6 col-lg-6 col-md-12 mx-auto mb-4">
-                        <div class="product-img-default mx-auto bg-warning text-white border border-white rounded"
-                            id="uploadIcon">
-                            <span class="fa-stack fa-2x">
-                                <i class="fas fa-circle fa-stack-2x text-dark"></i>
-                                <i class="fas fa-cloud-upload-alt fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </div>
-                        <div class="custom-file mt-3 mb-3">
-                            <input id="fileInput" name="fileIMG" type="file" class="d-none">
-                            <button type="button" class="btn btn-warning btn-block mx-auto" id="uploadButton">Upload
-                                Product Image</button>
+                                class="d-none">
+                                <button type="button" class="btn btn-warning btn-block mx-auto mt-3"
+                                    id="uploadButton">Upload
+                                    Product Image</button>
 
+                            </div>
+                        </div>
+                        <div class="col-12 mt-5 mt-md-3">
+                            <button type="submit" class="btn btn-info btn-block my-3 my-sm-1">
+                                {{#if toUpdate}}
+                                Update this product
+                                {{else}}
+                                Add Product Now
+                                {{/if}}
+                            </button>
                         </div>
                     </div>
-                    <div class="col-12 mt-5 mt-md-3">
-                        <button type="submit" class="btn btn-info btn-block my-3 my-sm-1">Add Product
-                            Now</button>
-                    </div>
-                </div>
-            </form>
+                </form>
         </div>
     </div>
 </div>

@@ -9,6 +9,14 @@ if (document.readyState == "loading") {
 }
 
 function ready() {
+  // Updates img after it is loaded by input[type=file]
+  let gameCover = document.querySelector("#fileInput");
+  if (gameCover) {
+    gameCover.addEventListener("change", (e) => {
+      handleFileSelect(e);
+    });
+  }
+
   let showPassword = document.querySelectorAll('[data-show="password"]');
   if (showPassword) {
     for (var i = 0; i < showPassword.length; i++) {
@@ -51,6 +59,30 @@ function ready() {
   getYear();
   // var homeTab = document.querySelector("#home-tab");
   // var profileTab = document.querySelector("#profile-tab");
+}
+
+// Show loaded img for products
+if (window.FileReader) {
+  function handleFileSelect(evt) {
+    var files = evt.target.files;
+    var f = files[0];
+    var reader = new FileReader();
+
+    reader.onload = (function (uploadedImg) {
+      let changeSrcImg = (e) => {
+        let img = document.querySelector("#game-cover-img");
+        if (img) {
+          img.setAttribute("src", e.target.result);
+          img.setAttribute("title", uploadedImg.name);
+        }
+      };
+      return changeSrcImg;
+    })(f);
+
+    reader.readAsDataURL(f);
+  }
+} else {
+  alert("This browser does not support FileReader");
 }
 
 function getYear() {
@@ -161,7 +193,6 @@ function toggleLogin() {
 function togglePassword(event) {
   let element = event.target.closest("button");
   let elementTarget = element.getAttribute("data-target");
-  // console.log(element.innerHTML);
   let newElement = document.getElementById(elementTarget);
   let type = newElement.getAttribute("type");
   if (type == "password") {
