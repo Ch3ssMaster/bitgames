@@ -6,7 +6,8 @@ const jwt = security.jwt;
 const secretKey = security.secretKey;
 const bcrypt = security.bcrypt;
 // Models
-const User = require("../../models/User");
+// const User = require("../../models/User");
+// const Producs = require("../../models/Product");
 var moment = require("moment-timezone");
 
 // @route GET / (Home)
@@ -17,7 +18,22 @@ router.get("/", (req, res) => {
   Product.find()
     .sort({ title: -1 })
     .then((result) => {
-      res.render("home", { allGames: result, post: false });
+      if (Object.keys(result).length === 0) {
+        const producsInfo = require("../utilities/products.json");
+        Product.insertMany(producsInfo)
+          .then(() => {
+            Product.find()
+              .sort({ title: -1 })
+              .then((result) => {
+                res.render("home", { allGames: result, post: false });
+              });
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } else {
+        res.render("home", { allGames: result, post: false });
+      }
     })
     .catch((err) => {
       console.log(err);
@@ -119,7 +135,6 @@ router.post("/", (req, res) => {
             result.push({
               userValidation: "The email already exists in the database.",
             });
-            console.log(result);
             res.render("home", { allGames: result, post: true });
             // console.log(err);
             // res. status(400).send('unable to save to database')

@@ -1,4 +1,4 @@
-/* 
+/*
  * bitGames v1.0.0-alpha (https://github.com/Ch3ssMaster/bitgames)
  * Copyright 2021 Antonio Cebrián Mesa
  * Licensed under MIT (https://github.com/Ch3ssMaster/bitgames/blob/main/LICENSE.md)
@@ -69,28 +69,48 @@ helpersHbs.handlebars.registerHelper("checkUpdatedPassword", function (value) {
   }
 });
 helpersHbs.handlebars.registerHelper("notFound", function (value) {
-  const lastItem = value.pop();
-  value.push(lastItem);
-  if (
-    lastItem.notFound == "password not found" ||
-    lastItem.notFound == "email not found"
-  ) {
-    return true;
+  if (value.hasOwnProperty("notFound")) {
+    const lastItem = value.pop();
+    value.push(lastItem);
+    if (
+      lastItem.notFound == "password not found" ||
+      lastItem.notFound == "email not found"
+    ) {
+      return true;
+    } else {
+      return false;
+    }
   } else {
     return false;
   }
 });
 helpersHbs.handlebars.registerHelper("userValidation", function (value) {
-  const lastItem = value.pop();
-  const userData = value.pop();
-  value.push(userData);
-  value.push(lastItem);
-  if (lastItem.userValidation == "The email already exists in the database.") {
-    return true;
+  if (value.hasOwnProperty("userValidation")) {
+    const lastItem = value.pop();
+    const userData = value.pop();
+    value.push(userData);
+    value.push(lastItem);
+    if (
+      lastItem.userValidation == "The email already exists in the database."
+    ) {
+      return true;
+    } else {
+      return false;
+    }
   } else {
     return false;
   }
 });
+helpersHbs.handlebars.registerHelper(
+  "checkObjectProperty",
+  function (value, option) {
+    if (value.hasOwnProperty(option)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+);
 helpersHbs.handlebars.registerHelper("getFormData", function (value, option) {
   const lastItem = value.pop();
   const userData = value.pop();

@@ -9,7 +9,7 @@ const jwt = security.jwt;
 const secretKey = security.secretKey;
 
 // Models
-const User = require("../../models/Product");
+// const User = require("../../models/Product");
 
 // @route GET /product/:id/new (Add a product)
 /* @desc Shows the view to save a new product in the database.

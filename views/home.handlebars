@@ -32,12 +32,14 @@
   <div class="card-deck mb-3 text-center" id="products-list">
     {{!-- Product Card --}}
     {{#each allGames}}
+    {{#if (checkObjectProperty this "_doc")}}
     <div class="card mb-4 h-100 shadow-sm" draggable="false" product-id="{{this._doc._id}}">
       <img src="/img/{{this._doc.img.localImg}}" class="card-img-top" alt="{{this._doc.title}}" draggable="false">
       <div class="card-footer text-white">
         <h4 class="my-0 font-weight-normal">{{this._doc.title}}</h4>
       </div>
     </div>
+    {{/if }}
     {{/each}}
   </div>
 </div>

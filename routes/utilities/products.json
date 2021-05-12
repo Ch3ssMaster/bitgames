@@ -1,0 +1,113 @@
+[
+  {
+    "_id": "603a84a4d0b3e73fe09dc039",
+    "title": "Red Dead Redemption II",
+    "publisher": "Rockstar Games",
+    "description": "America, 1899. The end of the Wild West era has begun. After a robbery goes badly wrong in the western town of Blackwater, Arthur Morgan and the Van der Linde gang are forced to flee. With federal agents and the best bounty hunters in the nation massing on their heels, the gang must rob, steal and fight their way across the rugged heartland of America in order to survive. As deepening internal divisions threaten to tear the gang apart, Arthur must make a choice between his own ideals and loyalty to the gang who raised him.",
+    "img": {
+      "localImg": "rdr2.jpg",
+      "coverImg": "https://s.rsg.sc/sc/images/react/games/boxart/rdr2.jpg"
+    },
+    "price": 89.99
+  },
+  {
+    "_id": "603a84a4d0b3e73fe09dc03a",
+    "title": "Grand Theft Auto V",
+    "publisher": "Rockstar Games",
+    "description": "Los Santos: a sprawling sun-soaked metropolis full of self-help gurus, starlets and fading celebrities, once the envy of the Western world, now struggling to stay afloat in an era of economic uncertainty and cheap reality TV.",
+    "img": {
+      "localImg": "gtav.jpg",
+      "coverImg": "https://s.rsg.sc/sc/images/react/games/boxart/gtav.jpg"
+    },
+    "price": 34.99
+  },
+  {
+    "_id": "603a84a4d0b3e73fe09dc03b",
+    "title": "Max Payne 3",
+    "publisher": "Rockstar Games",
+    "description": "For Max Payne, the tragedies that took his loved ones years ago are wounds that refuse to heal. No longer a cop, close to washed up and addicted to pain killers, Max takes a job in São Paulo, Brazil, protecting the family of wealthy real estate mogul Rodrigo Branco, in an effort to finally escape his troubled past. But as events spiral out of his control, Max Payne finds himself alone on the streets of an unfamiliar city, desperately searching for the truth and fighting for a way out.",
+    "img": {
+      "localImg": "mp3.jpg",
+      "coverImg": "https://s.rsg.sc/sc/images/react/games/boxart/mp3.jpg"
+    },
+    "price": 25.99
+  },
+  {
+    "_id": "603a84a4d0b3e73fe09dc03c",
+    "title": "Midnight Club: Los Angeles",
+    "publisher": "Rockstar Games",
+    "description": "The best way to see Los Angeles is at 245mph. Race at breakneck speeds through the streets of modern-day L.A. recreated in stunning detail. Drive the hottest range of real-world tuners, muscle cars, exotics and superbikes on the streets today. Customize your vehicle with the best after-market performance parts and custom kits. Illegal street racing with no track, no load times, no rules: Welcome to the Midnight Club.",
+    "img": {
+      "localImg": "mcla.jpg",
+      "coverImg": "https://s.rsg.sc/sc/images/react/games/boxart/mcla.jpg"
+    },
+    "price": 15.99
+  },
+  {
+    "_id": "603a84a4d0b3e73fe09dc03d",
+    "title": "Battlefield: Bad Company™ 2",
+    "publisher": "Electronic Arts",
+    "description": "Battlefield Bad Company 2 brings the spectacular Battlefield gameplay to the forefront of consoles and PC - featuring best-in-class vehicular combat set across 8 huge sandbox maps each with a different tactical focus.",
+    "img": {
+      "localImg": "bttlbc2-3.jpg",
+      "coverImg": "https://data2.origin.com/asset/content/dam/originx/web/app/games/battlefield/battlefield-bad-company-2/screenshots/battlefield-bad-company-2/2.jpg/ae1538fe-3a36-4284-acf7-72a76a735694/original.jpg"
+    },
+    "price": 109.99
+  },
+  {
+    "_id": "603a84a4d0b3e73fe09dc03e",
+    "title": "Warhammer: Chaosbane",
+    "publisher": "Eko Software",
+    "description": "In a world ravaged by war and dominated by magic, you are the last hope for the Empire of Man against the Chaos hordes. Playing solo or with up to 4 in local or online co-op, choose a hero from 4 character classes with unique and complementary skills, and prepare for epic battles wielding some of the most powerful artefacts of the Old World.",
+    "img": {
+      "localImg": "warcha2.jpg",
+      "coverImg": "https://data2.origin.com/asset/content/dam/originx/web/app/games/warhammer/warhammer-chaosbane/screens/warhammer-chaosbane_screenhi_1920x1080_en_US_06.jpg/057895c4-6ee5-4b06-b6bf-7d99c2f4c456/original.jpg"
+    },
+    "price": 59.99
+  },
+  {
+    "_id": "603a84a4d0b3e73fe09dc03f",
+    "title": "FIFA 21",
+    "publisher": "Electronic Arts",
+    "description": "The Ultimate Edition is yours when you join Pro. Unlock Rare Gold FUT Packs, and more. Plus, access our evolving game library and save 10% on all digital purchases. New additions create additional depth in matches, transfers, and training to give you more control over your team’s rise to the top.",
+    "img": {
+      "localImg": "fifa21.jpg",
+      "coverImg": "https://data4.origin.com/asset/content/dam/originx/web/app/games/fifa/fifa-21/gdp/PUB-46687_screenshot-updt/fifa21-Screenshot-4-16x9.jpg/eb824b41-7433-4c39-a991-4b2bf45727d9/original.jpg"
+    },
+    "price": 99.99
+  },
+  {
+    "_id": "603a84a4d0b3e73fe09dc040",
+    "title": "Madden NFL 21",
+    "publisher": "Electronic Arts",
+    "description": "A new generation is leaving its mark in the NFL. Will you rise to the occasion? Change the game and take control of your own legacy.",
+    "img": {
+      "localImg": "nfl21.jpg",
+      "coverImg": "https://data3.origin.com/asset/content/dam/originx/web/app/games/madden/madden-21/M21_FirstLook_CMC_Juke_Final_07_Apr30_PS04_WM.jpg/bdb2027f-16fa-4829-aa4e-25c6e11d050f/original.jpg"
+    },
+    "price": 79.99
+  },
+  {
+    "_id": "603b58e0c136d7464070b505",
+    "title": "Prince of Persia: The Sands of Time Remake",
+    "publisher": "Ubisoft",
+    "description": "A new generation is leaving its mark in the NFL. Will you rise to the occasion? Change the game and take control of your own legacy.",
+    "img": {
+      "localImg": "prince.jpg",
+      "coverImg": "https://staticctf.akamaized.net/J3yJr34U2pZ2Ieem48Dwy9uqj5PNUQTn/2pjTEkN0eU4jhgl3qZk8xg/194d16231dc17205e4b0eee604fc3e3e/Key_Art.jpg"
+    },
+    "price": 59.99
+  },
+  {
+    "_id": "60552e5731f29c065070c635",
+    "title": "L.A. Noire",
+    "publisher": "Rockstar Games",
+    "description": "Amid the post-war boom of Hollywood's Golden Age, Cole Phelps — an LAPD detective — is thrown headfirst into a city drowning in its own success. Corruption is rampant, the drug trade is exploding, and murder rates are at an all-time high. In his fight to climb the ranks and do what's right, Phelps must unravel the truth behind a string of arson attacks, racketeering conspiracies, and brutal murders, battling the L.A. underworld and even members of his own department to uncover a secret that could shake the city to its rotten core.",
+    "img": {
+      "localImg": "lanoire.jpg",
+      "coverImg": "https://media-rockstargames-com.akamaized.net/rockstargames-newsite/img/global/games/fob/1280/lanoire.jpg"
+    },
+    "price": 29.99,
+    "__v": 0
+  }
+]
